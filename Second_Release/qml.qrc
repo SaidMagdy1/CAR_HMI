@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Gauge.qml</file>
+        <file>bg.jpg</file>
+        <file>Battery.qml</file>
+        <file>AldotheApache.ttf</file>
+        <file>battery_soc2.png</file>
+        <file>battery_soh.png</file>
+        <file>battery_temperature.png</file>
+        <file>Gauge_main.qml</file>
+        <file>img/car_temp.png</file>
+        <file>img/gauge_circle.png</file>
+        <file>img/gauge_dashs.png</file>
+        <file>img/mode_selector.png</file>
+        <file>SGauge.qml</file>
+        <file>Speed_Gauge.qml</file>
+        <file>Footer.qml</file>
+        <file>logo.png</file>
+        <file>weather.png</file>
+        <file>Header.qml</file>
+        <file>car_model.png</file>
+        <file>gauge_circle.png</file>
+        <file>gauge_dashs.png</file>
+        <file>audi r8.obj</file>
+        <file>Avent_sport.obj</file>
+        <file>GEntity.qml</file>
+        <file>RootEntity.qml</file>
+    </qresource>
+</RCC>

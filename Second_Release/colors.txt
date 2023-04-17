@@ -1,0 +1,7 @@
+colors :
+
+orange  #f2916e
+
+green   #05f228
+
+blue    #06c7f2

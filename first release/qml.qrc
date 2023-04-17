@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Vector_2677.jpg</file>
+        <file>Gauge.qml</file>
+        <file>helvetica.ttf</file>
+        <file>car.png</file>
+        <file>gauge.png</file>
+        <file>carICON.png</file>
+        <file>batteryICON.png</file>
+        <file>pointer.png</file>
+        <file>soc1.png</file>
+        <file>soc2.png</file>
+        <file>soc3.png</file>
+        <file>health1.png</file>
+        <file>health2.png</file>
+        <file>health3.png</file>
+        <file>speedpage.qml</file>
+        <file>batterypage.qml</file>
+        <file>carpage.qml</file>
+        <file>percentR.png</file>
+        <file>percentG.png</file>
+        <file>battery.png</file>
+        <file>charging.gif</file>
+        <file>chargingimg.png</file>
+        <file>battery-warning.png</file>
+        <file>seat-belt .png</file>
+    </qresource>
+</RCC>
