@@ -25,27 +25,40 @@ Item{
 
     Plugin {
         id: mapboxglPlugin
-        name: "mapboxgl"
+        name:  "osm"          //with mapboxgl we have no Route
+//        name:"mapboxgl"
+//        PluginParameter {
+//            name: "mapboxgl.access_token"
+//            value: "pk.eyJ1Ijoib2xld2FuZG93c2tpMiIsImEiOiJjampqdnQ4MWIwdzlnM2ttZGVqcnYza2xvIn0.ni1y0Hj_mm8B0YYfX3BW9g"
+//        }
 
-        PluginParameter {
-            name: "mapboxgl.access_token"
-            value: "pk.eyJ1Ijoib2xld2FuZG93c2tpMiIsImEiOiJjampqdnQ4MWIwdzlnM2ttZGVqcnYza2xvIn0.ni1y0Hj_mm8B0YYfX3BW9g"
-        }
+//        PluginParameter {
+//            name: "mapboxgl.mapping.cache.size"
+//            value: 2000
+//        }
 
-        PluginParameter {
-            name: "mapboxgl.mapping.cache.size"
-            value: 2000
-        }
-
-        PluginParameter {
-            id:style
-            name: "mapboxgl.mapping.additional_style_urls"
-           value: mapStyle
-           //value: "mapbox://styles/olewandowski2/cjrakjdzm2jf12sp9rdgwncmh"
-          // value: "mapbox://styles/olewandowski2/cjn5sohnz0nr42suv510nrw4l"
-           //value: "mapbox://styles/olewandowski2/cjrp872n3bo7i2slfyx8jlv75"
-        }
+//        PluginParameter {
+//            id:style
+//            name: "mapboxgl.mapping.additional_style_urls"
+//           value: mapStyle
+//           //value: "mapbox://styles/olewandowski2/cjrakjdzm2jf12sp9rdgwncmh"
+//          // value: "mapbox://styles/olewandowski2/cjn5sohnz0nr42suv510nrw4l"
+//           //value: "mapbox://styles/olewandowski2/cjrp872n3bo7i2slfyx8jlv75"
+//        }
     }
+
+    RouteQuery {
+        id: routeQuery
+    }
+
+    RouteModel {
+        id: routeModel
+        plugin: mapboxglPlugin
+        query: routeQuery
+        autoUpdate: false
+    }
+
+
 
     Map {
         id: myMap
@@ -53,8 +66,72 @@ Item{
         plugin: mapboxglPlugin
         center: QtPositioning.coordinate(carPositionX, carPositionY)
         zoomLevel: zoom
-//        bearing: 30
-//        tilt: naviTilt
+
+
+        MapItemView {
+            model: routeModel
+            delegate: MapRoute {
+                route: routeData
+                line.color: "blue"
+                line.width: 8
+                smooth: true
+                opacity: 0.8
+            }
+        }
+
+        MapItemView {
+            model: routeModel.status == RouteModel.Ready ? routeModel.get(0).path : null
+            delegate: MapQuickItem {
+                anchorPoint.x: pathMarker.width / 2
+                anchorPoint.y: pathMarker.height / 2
+                coordinate: modelData
+
+                sourceItem:Rectangle {       // the middle points shape
+                    id: pathMarker
+                    width: 8
+                    height: 8
+                    radius: 8
+                    border.width: 1
+                    border.color: "black"
+                    color: "yellow"
+                }
+            }
+        }
+
+        MapItemView {
+            model: routeQuery.waypoints
+            delegate: MapQuickItem {
+                anchorPoint.x: waypointMarker.width / 1.9    //this is for distance from mouse clicked to the Icon
+                anchorPoint.y: waypointMarker.height / 1.1
+                coordinate: modelData
+
+                sourceItem:Image {               // the start and end points shape
+                    id: waypointMarker
+                    width:30
+                    height: 30
+
+                    source: "qrc:/img/location-pin.png"
+                    fillMode: Image.PreserveAspectFit
+                } /*
+                    Rectangle {
+                    id: waypointMarker
+                    width: 10
+                    height: 10
+                    radius: 10
+                    border.width: 1
+                    border.color: "black"
+                    color: "red"
+                }*/
+            }
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                routeQuery.addWaypoint(myMap.toCoordinate(Qt.point(mouse.x,mouse.y)))
+                routeModel.update()
+            }
+        }
+
     }
 
 //    function tiltIn()
@@ -184,4 +261,39 @@ Item{
         sohValue: 75
         sotValue: 70
     }
+
+    Rectangle {
+        id: routeReset
+        width: 50
+        height: 50
+        radius:30
+        anchors{
+            top:parent.top
+            topMargin: 10
+            left: parent.left
+            leftMargin: 10
+        }
+
+        border.width:2
+        border.color:"black"
+
+        gradient: Gradient {
+                 GradientStop { position: 1.0; color: "lightsteelblue" }
+                 GradientStop { position: 0.0; color: "blue" }
+               }
+        Text {
+
+            anchors.centerIn: parent
+            font.bold: true
+            color: "black"
+            text: qsTr("Reset")
+       }
+       MouseArea{
+         anchors.fill: parent
+         onClicked: {
+             routeQuery.clearWaypoints()
+             routeModel.reset()
+           }
+       }
+   }
 }
