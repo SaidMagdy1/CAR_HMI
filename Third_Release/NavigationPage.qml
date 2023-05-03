@@ -1,6 +1,9 @@
-import QtQuick 2.12
-import QtLocation 5.12
-import QtPositioning 5.12
+import QtQuick 2.15
+import QtLocation 5.15
+import QtPositioning 5.15
+import QtQuick.Controls 2.15
+//import Esri.ArcGISRuntime
+
 
 Item{
     id: naviFrame
@@ -58,6 +61,42 @@ Item{
         autoUpdate: false
     }
 
+
+
+    //! [Current Location]
+//    PositionSource {
+//        id: positionSource
+//        property variant lastSearchPosition: locationAlex
+//        active: true
+//        updateInterval: 1000 // 2 mins
+//        onPositionChanged:  {
+//            var currentPosition = positionSource.position.coordinate
+//            myMap.center = currentPosition
+//            var distance = currentPosition.distanceTo(lastSearchPosition)
+//            if (distance > 500) {
+//                // 500m from last performed pizza search
+//                lastSearchPosition = currentPosition
+//                searchModel.searchArea = QtPositioning.circle(currentPosition)
+//                searchModel.update()
+//            }
+//        }
+//    }
+    //! [Current Location]
+
+    //! [PlaceSearchModel]
+    property variant locationAlex: QtPositioning.coordinate(carPositionX, carPositionY)
+
+
+//    PlaceSearchModel {
+//        id: searchModel
+
+//        plugin: mapboxglPlugin
+
+//        searchTerm: searchInput.text
+//        searchArea: QtPositioning.circle(locationAlex)
+
+//        Component.onCompleted: update()
+//    }
 
 
     Map {
@@ -124,6 +163,24 @@ Item{
                 }*/
             }
         }
+//        MapItemView {
+//            model: searchModel
+//            delegate: MapQuickItem {
+//                coordinate: place.location.coordinate
+
+//                anchorPoint.x: image.width * 0.5
+//                anchorPoint.y: image.height
+
+//                sourceItem: Column {
+//                    Image { id: image;
+//                        width: 20
+//                        fillMode: Image.PreserveAspectFit
+//                        source: "qrc:/img/location-pin.png" }
+//                    Text { text: title; font.bold: true }
+//                }
+//            }
+//        }
+
         MouseArea {
             anchors.fill: parent
             onClicked: {
@@ -132,7 +189,25 @@ Item{
             }
         }
 
+
+        Header{
+          id:naviHeader
+         }
+
+
+//        bearing: 30
+//        tilt: naviTilt
     }
+
+
+
+//    Connections {
+//        target: searchModel
+//        onStatusChanged: {
+//            if (searchModel.status == PlaceSearchModel.Error)
+//                console.log(searchModel.errorString());
+//        }
+//    }
 
 //    function tiltIn()
 //    {
@@ -215,6 +290,7 @@ Item{
 //        }
 //    }
 
+
     Rectangle{
         width:350
         height: 350
@@ -243,6 +319,23 @@ Item{
         }
     }
 
+
+    Rectangle{
+        id:footer
+        height: 75
+        gradient: Gradient {
+                 GradientStop { position: 1.0; color: "black" }  // "lightsteelblue"
+                 GradientStop { position: 0.0; color: "blue" }
+             }
+        radius: 50
+        anchors{
+            left: naviGear.right
+            right: naviBattery.left
+            rightMargin: 300
+            bottom: parent.bottom
+        }
+    }
+
     Speed_Gauge{
         id:naviGear
       scale: 0.35
@@ -252,7 +345,7 @@ Item{
       smode: "driving"
     }
 
-    Battery{
+    BatteryGauge{
         id:naviBattery
        scale : 0.35
         x:1500
@@ -261,7 +354,6 @@ Item{
         sohValue: 75
         sotValue: 70
     }
-
     Rectangle {
         id: routeReset
         width: 50
@@ -296,4 +388,39 @@ Item{
            }
        }
    }
+    Rectangle{
+        id:searchBox
+        width:250
+        height: 50
+        color: "lightsteelblue"
+        opacity: .5
+
+        radius: 10
+       anchors{
+            top: parent.top
+            topMargin: 20
+            left: routeReset.right
+            leftMargin: 20
+       }
+
+        TextInput{
+            id:searchInput
+            width: 200
+            height: 50
+            clip: true
+           anchors{
+                top: parent.top
+                topMargin: 15
+                left: parent.left
+                leftMargin: 20
+           }
+
+            color: "black"
+            font.bold: true
+            font.pixelSize: 20
+            //anchors.centerIn: parent
+       }
+   }
+
+
 }

@@ -12,6 +12,12 @@ Item {
     property color primcol: "#06c7f2"
     property real linesize: 27
 
+
+    property int raduis: width/2 -(linesize/2)     // this is to use it on Battery page *******
+    property real xArc : width/2
+    property real yArc: height/2
+
+
     height: 675
     width: height
     //x:0
@@ -25,7 +31,7 @@ Item {
         id: gparam
         text: name
         font.family: aldotheapache.name
-        font.pointSize: 30
+        font.pointSize: 35
         color: "#ffffff"
         anchors.centerIn: parent
     }
@@ -38,9 +44,9 @@ Item {
         property real enda: (Math.PI/180)* base.end
         property real degree: base.currentv
         property real proga:  -(Math.PI/180)*(degree+40)
-        property real xvalue : width/2
-        property real yvalue: height/2
-        property real radius: width/2 -(linesize/2)
+        property real xvalue : parent.xArc
+        property real yvalue: parent.yArc
+        property real radius: parent.raduis
 
         anchors.fill:parent
         anchors.centerIn: parent
@@ -67,7 +73,6 @@ Item {
             ctx.lineWidth = linesize;
             ctx.lineCap='square' ;
             ctx.stroke();
-
 
         }
     }

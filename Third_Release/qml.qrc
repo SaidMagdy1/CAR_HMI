@@ -2,13 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Gauge.qml</file>
-        <file>bg.jpg</file>
-        <file>Battery.qml</file>
+        <file>BatteryGauge.qml</file>
         <file>AldotheApache.ttf</file>
-        <file>gauge_dashs.png</file>
-        <file>battery_soc2.png</file>
-        <file>battery_soh.png</file>
-        <file>battery_temperature.png</file>
         <file>Gauge_main.qml</file>
         <file>img/car_temp.png</file>
         <file>img/gauge_dashs.png</file>
@@ -16,10 +11,7 @@
         <file>SGauge.qml</file>
         <file>Speed_Gauge.qml</file>
         <file>Footer.qml</file>
-        <file>logo.png</file>
-        <file>weather.png</file>
         <file>Header.qml</file>
-        <file>car_model.png</file>
         <file>img/gauge_circle.png</file>
         <file>CarPage.qml</file>
         <file>NavigationPage.qml</file>
@@ -38,7 +30,6 @@
         <file>img/electric-car.png</file>
         <file>img/red_belt.png</file>
         <file>img/speedometer.png</file>
-        <file>img/tire.png</file>
         <file>img/turn-off.png</file>
         <file>img/turn-signal.png</file>
         <file>img/turn-signal_bordered.png</file>
@@ -50,5 +41,50 @@
         <file>img/red_arrow.png</file>
         <file>img/green_arrow180.png</file>
         <file>img/red_arrow180.png</file>
+        <file>img/location-pin.png</file>
+        <file>img/blank.jpg</file>
+        <file>img/greenTire.png</file>
+        <file>img/redTire.png</file>
+        <file>img/battery_soc2.png</file>
+        <file>img/battery_soh.png</file>
+        <file>img/battery_temperature.png</file>
+        <file>img/bg.jpg</file>
+        <file>img/car_model.png</file>
+        <file>img/logo.png</file>
+        <file>img/weather.png</file>
+        <file>img/car-lights-off.png</file>
+        <file>img/charging-off.png</file>
+        <file>img/charging-on.png</file>
+        <file>img/low-battery-on.png</file>
+        <file>img/low-beam-off.png</file>
+        <file>img/low-beam-on.png</file>
+        <file>img/main-page-off.png</file>
+        <file>img/main-page-on.png</file>
+        <file>img/navigation-page-off.png</file>
+        <file>img/navigation-page-on.png</file>
+        <file>img/seat-belt-off.png</file>
+        <file>img/seat-belt-on.png</file>
+        <file>img/car-page.off.png</file>
+        <file>Notification.qml</file>
+        <file>img/battery-Alarm.png</file>
+        <file>img/system-update.png</file>
+        <file>img/turtle.png</file>
+        <file>img/warning-icon.svg.med-removebg-preview.png</file>
+        <file>img/warnn-removebg-preview.png</file>
+        <file>img/wren-charge.png</file>
+        <file>img/gear.png</file>
+        <file>img/car-EF.png</file>
+        <file>img/images-removebg-preview.png</file>
+        <file>img/tireP-obb.png</file>
+        <file>img/tireP-off.png</file>
+        <file>img/charging.png</file>
+        <file>img/modeleft.png</file>
+        <file>img/moderight.png</file>
+        <file>img/volt.png</file>
+        <file>img/car-page.on.png</file>
+        <file>BatteryPage.qml</file>
+        <file>img/car-lights-on.png</file>
+        <file>img/battery-page.off.png</file>
+        <file>img/battery-page.on.png</file>
     </qresource>
 </RCC>

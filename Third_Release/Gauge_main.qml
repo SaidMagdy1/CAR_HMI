@@ -41,9 +41,8 @@ Item {
     Text{
         id:percentText   //Value
         x:parent.width/2-100
-        y:parent.height/2-200
-//        anchors.horizontalCenter: icon.horizontalCenter
-//        anchors.bottomMargin: 20
+        y:parent.height/2-250
+
         text: percentage
         font.bold: true
         font.pointSize:100
@@ -106,7 +105,7 @@ Item {
             var yStart = y + Math.sin(startAngle) * radius;
             var yEnd = y + Math.sin(progressAngle) * radius;
             var gradient = ctx.createLinearGradient(xStart, yStart, xEnd, yEnd);
-            gradient.addColorStop(0,"transparent");
+            gradient.addColorStop(0,root.primaryColor);   //  "transparent"
             gradient.addColorStop(1,root.primaryColor);
             ctx.strokeStyle = gradient;
             ctx.stroke();

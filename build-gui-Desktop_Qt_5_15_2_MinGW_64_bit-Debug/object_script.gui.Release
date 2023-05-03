@@ -1,0 +1,10 @@
+release/main.o
+release/frame.o
+release/frameprocessor.o
+release/serialworker.o
+release/http.o
+release/qrc_qml.o
+release/moc_frame.o
+release/moc_frameprocessor.o
+release/moc_serialworker.o
+release/moc_http.o

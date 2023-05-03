@@ -10,7 +10,7 @@ Item {
     }
     Image {
         id: logo
-        source: "logo.png"
+        source: "qrc:/img/logo.png"
         anchors.centerIn: root
         scale:0.6
     }
@@ -32,10 +32,24 @@ Item {
 
     Image {
         id: weather
-        source: "weather.png"
+        source: "qrc:/img/weather.png"
         anchors.top: root.top
         x:temp.x+(temp.width-width)/2
         scale :0.6
+    }
+
+
+    Text {
+        id: time
+        text: qsTr("09:00 AM")
+        anchors.top: root.top
+        anchors.topMargin: 10
+        x:date.x+(date.width-width)/2
+        color: "white"
+        font.family: aldotheapache.name
+        font.pointSize: 13
+
+
     }
 
     Text {
@@ -52,17 +66,17 @@ Item {
 
 
     }
-    Text {
-        id: time
-        text: qsTr("09:00 AM")
-        anchors.top: root.top
-        anchors.topMargin: 10
-        x:date.x+(date.width-width)/2
-        color: "white"
-        font.family: aldotheapache.name
-        font.pointSize: 10
-
-
+    Timer
+    {
+        id : timer
+        interval: 1000 // 1 second
+        running: true
+        repeat: true
+        onTriggered:
+        {
+            time.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
+            date.text = Qt.formatDateTime(new Date(), "dddd dd MMMM")
+        }
     }
 
 

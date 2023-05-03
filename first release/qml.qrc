@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Vector_2677.jpg</file>
         <file>Gauge.qml</file>
         <file>helvetica.ttf</file>
         <file>car.png</file>

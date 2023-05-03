@@ -61,21 +61,9 @@ ApplicationWindow {
 //}
 
 
-    Scene3D {
-        id: scene3d
-        anchors.fill: parent
-
-        focus: true
-        aspects: ["render", "logic", "input"]
-        cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
-        RootEntity {}
 
 
 
-        }
-
-
-    }
 
 
 
@@ -87,14 +75,14 @@ ApplicationWindow {
 
 
 
-//    Image {
-//        id: car
-//        source: "car_model.png"
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        scale:0.5
-//        opacity:0.8
-//        y:100
-//    }
+    Image {
+        id: car
+        source: "car_model.png"
+        anchors.horizontalCenter: parent.horizontalCenter
+        scale:0.5
+        opacity:0.8
+        y:100
+    }
 
 
-//}
+}

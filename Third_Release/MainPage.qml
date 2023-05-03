@@ -6,7 +6,10 @@ Item{
     property bool turnRight: false    //should be adjusted to Defualt 0 ->false
     property bool turnLeft: false
     property bool seatBelt: false
-    property bool pressureAlarm: true
+    property bool lights: false
+    property bool chargingState :false
+
+    //property bool pressureAlarm: true
     property bool lowPower: false
     property bool flasher: false
 
@@ -25,7 +28,6 @@ Item{
     property int flag3: 0
     property int flag0: 0
 
-
     property bool smallPage: true
 
     //------to_Adjust_Car2D_In_Different_Sizes----------
@@ -34,46 +36,46 @@ Item{
 
     FontLoader { id:aldo ; source: "AldotheApache.ttf" }
     //-----------------buttons_for_test--------------
-     RowLayout{
-         id:lay1
-         spacing: 2
-         Button{
-             width: 20
-             height: 20
-             text: "P"
-             onClicked: smallPage =!smallPage
-         }
-         Button{
-             width:10
-             height: 20
-             text: "<"
-             onClicked: turnLeft =!turnLeft
-         }
-         Button{
-             width: 20
-             height: 20
-             text: ">"
-             onClicked: turnRight =!turnRight
-         }
+//     RowLayout{
+//         id:lay1
+//         spacing: 2
+//         Button{
+//             width: 20
+//             height: 20
+//             text: "P"
+//             onClicked: smallPage =!smallPage
+//         }
+//         Button{
+//             width:10
+//             height: 20
+//             text: "<"
+//             onClicked: turnLeft =!turnLeft
+//         }
+//         Button{
+//             width: 20
+//             height: 20
+//             text: ">"
+//             onClicked: turnRight =!turnRight
+//         }
 
-         Button{
-             width: 10
-             height: 20
-             text: "belt"
-             onClicked: seatBelt =!seatBelt
-         }
-         Button{
-             width: 20
-             height: 20
-             text: "charge"
-             onClicked: lowPower =!lowPower
-         }
-     }
+//         Button{
+//             width: 10
+//             height: 20
+//             text: "belt"
+//             onClicked: seatBelt =!seatBelt
+//         }
+//         Button{
+//             width: 20
+//             height: 20
+//             text: "charge"
+//             onClicked: lowPower =!lowPower
+//         }
+//     }
 
     //-------------------------------------
 
     anchors.fill:parent
-    Battery{
+    BatteryGauge{
        // width : 220
         //height: 220
        scale : 0.45
@@ -90,12 +92,7 @@ Item{
       value1: 180
       smode: "driving"
     }
-    Footer{
-        id : footer
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 15
-    }
+
 
     //---------------------------------carInMainPageConditions-----------------------
 
@@ -330,13 +327,18 @@ Item{
             color:  tire4 < 26 ? "red" :"green"
             text: tire2+" bar"
         }
+
         Image {
-            id: carElevation
+            id: carElevation              //tires Pressure in MainPage
             x:30
             scale: 0.8
             opacity:.4
             source: "qrc:/img/Elevation.png"
             fillMode:Image.PreserveAspectFit
+            MouseArea{
+                anchors.fill: parent
+                onClicked: smallPage =!smallPage
+            }
 
         }
 
@@ -354,50 +356,29 @@ Item{
        anchors.fill: parent
        color:"transparent"
 
+        Text {
+            id: textt
+            color: "transparent"
+            text: qsTr("text")
+        }
 
 
+        Image {
+            id: base
+            source: "qrc:/img/Base1.png"
+            x:295+xErorr
+            y:55+yErorr
+            //anchors.verticalCenter:  parent.verticalCenter
 
-
-          Button{
-              id:fLight
-              height: 50
-              width: 50
-              text: "Flight"
-              x:100
-              y:110
-              onClicked: frontlight = !frontlight
-
+            opacity: 1
+            scale: 0.6
+            MouseArea{
+                anchors.fill: parent
+                onClicked: smallPage =!smallPage
             }
-          Button{
-              id:doors
-              height: 50
-              width: 50
-              text: "DOOR"
-              x:100
-              y:50
-              onClicked: door = !door
+       }
 
-          }
-
-          Text {
-              id: textt
-              color: "transparent"
-              text: qsTr("text")
-          }
-
-
-          Image {
-              id: base
-              source: "qrc:/img/Base1.png"
-              x:295+xErorr
-              y:55+yErorr
-              //anchors.verticalCenter:  parent.verticalCenter
-
-              opacity: 1
-              scale: 0.6
-          }
-
-          Image {
+        Image {
               id: doorwithoutL
               source: "qrc:/img/mainDoor.png"
               x:290+xErorr
@@ -405,8 +386,8 @@ Item{
               y:74+yErorr
               opacity: 0
               scale: 0.65
-          }
-          Image {
+       }
+       Image {
               id: doorwithL
               source: "qrc:/img/doorWithlight.png"
               x:280+xErorr
@@ -414,16 +395,16 @@ Item{
               y:80+yErorr
               opacity: 0
               scale: 0.69
-          }
-            Image {
-                id: lwithoutD
-                source: "qrc:/img/LighWithotDoor.png"
-                x:315+xErorr
-                //anchors.horizontalCenter: base.horizontalCenter
-                y:75+yErorr
-                opacity: 0
-                scale: 0.64
-            }
+       }
+        Image {
+            id: lwithoutD
+            source: "qrc:/img/LighWithotDoor.png"
+            x:315+xErorr
+            //anchors.horizontalCenter: base.horizontalCenter
+            y:75+yErorr
+            opacity: 0
+            scale: 0.64
+       }
 
 
 
@@ -594,25 +575,25 @@ Item{
     }
     Image {
         id: beltAlarm
-        x:parent.width-parent.width/3+20
+        x:parent.width-parent.width/3+50
         y:parent.height-parent.height/5
-        width: parent.width/30
-        visible: seatBelt
+        width: parent.width/33
+        //visible: seatBelt
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/img/yellow_belt.png"
+        source: seatBelt ? "qrc:/img/seat-belt-on.png" :"qrc:/img/seat-belt-off.png"
     }
     Image {
         id: pressureAlarm
         anchors{
             bottom: beltAlarm.top
-            right: beltAlarm.left
-            rightMargin: -10
+            right: beltAlarm.right
+            rightMargin: 25
         }
 
         width: parent.width/35
-        visible: tire1<26 || tire2<26 || tire3<26 || tire4<26
+       // visible: tire1<26 || tire2<26 || tire3<26 || tire4<26
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/img/tire.png"
+      source: tire1<26 || tire2<26 || tire3<26 || tire4<26 ? "qrc:/img/tireP-obb.png":"qrc:/img/tireP-off.png"
     }
 
     Image {
@@ -625,9 +606,22 @@ Item{
         }
 
         width: parent.width/40
-        visible: lowPower
+       // visible: lowPower
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/img/electric-car.png"
+        source:lowPower ? "qrc:/img/electric-car.png" :""
+    }
+    Image {
+        id: lightSignal
+       anchors{
+           bottom:pressureAlarm.top
+           bottomMargin: 30
+           right: pressureAlarm.right
+           rightMargin: 35
+       }
+        width: parent.width/42
+
+        fillMode: Image.PreserveAspectFit
+        source: lights ? "qrc:/img/car-lights-on.png" :"qrc:/img/car-lights-off.png"
     }
 
 }
