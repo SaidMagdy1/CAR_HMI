@@ -32,6 +32,8 @@ Item{
         scale: 0.45
         soVisiblity:false
         socValue: parent.socValue
+
+
     }
     Image {
         id: charging
@@ -254,6 +256,54 @@ Item{
         }
     }
 
+  HMchart{
+      id:batteryChart
+      anchors{
+          top: batteryCharge.bottom
+          topMargin:0
+          left: batteryCharge.left
+      }
+     max:100
+     min:0
+     value: socValue
+     rate: 10
+      //lineColor: red
+   }
+    Text{
+        id:chartMinValue
+        anchors.bottom: batteryChart.bottom
+        anchors.right: batteryChart.left
+        font.pixelSize: 14
+        color: "#06c7f2"
+        text: "%0- "
+    }
+    Text{
+        id:chartMiddValue
+        anchors{
+            top: batteryChart.bottom
+            topMargin:- (batteryChart.max/2)-5
+            right: batteryChart.left
+        }
+        font.pixelSize: 14
+        color: "#06c7f2"
+        text: "%50- "
+    }
+    Text{
+        id:chartMaxValue
+        anchors{
+           top: batteryChart.bottom
+           topMargin:-batteryChart.max-5
+           right: batteryChart.left
+        }
+        font.pixelSize: 14
+        color: "#06c7f2"
+        text: "%100- "
+    }
 
+  MouseArea{
+      anchors.fill: parent
+      onClicked:socValue = socValue + 5
+      onWheel: socValue = socValue - 5
 
+  }
 }

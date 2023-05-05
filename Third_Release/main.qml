@@ -1,18 +1,21 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtGraphicalEffects 1.15
-import  QtCharts 2.15
+import QtQuick.Layouts 1.15
+//import  QtCharts 2.15
 //import QtQuick3D 1.15
 //import Qt3D.Core 2.0
 //import Qt3D.Render 2.0
 
 Window {
+    id:mainWindow
     width: 1920
     height: 585
     visible: true
     color: "black"
 
     property int pages: 0
+    property bool batState : true
 
 
     Image {
@@ -129,17 +132,8 @@ Window {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
     }
-//    ChartView {
-//       width: 400
-//        height: 300
-//        theme: ChartView.ChartThemeBrownSand
-//        antialiasing: true
 
-//        PieSeries {
-//            id: pieSeries
-//            PieSlice { label: "eaten"; value: 94.9 }
-//            PieSlice { label: "not yet eaten"; value: 5.1 }
-//        }
-//    }
+
+
 
 }

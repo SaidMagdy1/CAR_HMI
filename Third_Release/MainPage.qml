@@ -3,8 +3,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 Item{
     id:mainPage
-    property bool turnRight: false    //should be adjusted to Defualt 0 ->false
-    property bool turnLeft: false
+    property bool turnRight: true    //should be adjusted to Defualt 0 ->false
+    property bool turnLeft: true
     property bool seatBelt: false
     property bool lights: false
     property bool chargingState :false
