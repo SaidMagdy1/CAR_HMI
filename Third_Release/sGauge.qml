@@ -72,6 +72,12 @@ Item {
             ctx.strokeStyle= gradient;
             ctx.lineWidth = linesize;
             ctx.lineCap='square' ;
+
+//            ctx.shadowColor = "#2ed5fa";         // for shade and Glow if We wanted
+//            ctx.shadowOffsetX = 0;
+//            ctx.shadowOffsetY = 20;
+//            ctx.shadowBlur = 20;
+
             ctx.stroke();
 
         }

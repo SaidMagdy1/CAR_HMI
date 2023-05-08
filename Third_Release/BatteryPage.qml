@@ -10,7 +10,7 @@ Item{
     property int speedValue: 160
     property int temperature: 60
     property int helth: 99
-    property int socValue: 20
+    property int socValue: 75
 
     property string chTime:( 100- socValue)*2 +"min  TO FULL CHARGE"
     property string carMode: "n o r m a l"
@@ -269,10 +269,22 @@ Item{
      rate: 10
       //lineColor: red
    }
+  Rectangle{
+      id:chartFooter
+      anchors.right: batteryChart.right
+      anchors.left: batteryChart.left
+      anchors.top: batteryChart.bottom
+      height: 2
+      color: "lightsteelblue"
+
+   }
     Text{
         id:chartMinValue
-        anchors.bottom: batteryChart.bottom
-        anchors.right: batteryChart.left
+        anchors{
+           top: batteryChart.bottom
+           topMargin: -10
+           right: batteryChart.left
+        }
         font.pixelSize: 14
         color: "#06c7f2"
         text: "%0- "
@@ -301,9 +313,13 @@ Item{
     }
 
   MouseArea{
-      anchors.fill: parent
-      onClicked:socValue = socValue + 5
-      onWheel: socValue = socValue - 5
+      width: 400
+      height: 400
+      anchors.centerIn: parent
+      onClicked: socValue = socValue - 2
+
+
+      onWheel: socValue = socValue + 1
 
   }
 }

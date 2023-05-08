@@ -30,7 +30,7 @@ Item {
           chartCanvas.requestPaint();
           batteryChart.lineX =  batteryChart.lineX + rate/10
           batteryChart.lineY = height - batteryChart.value
-
+           //value =value+1
          if(batteryChart.lineX >= batteryChart.width-20){
               chartCanvas.x =  chartCanvas.x - rate/10 ;
               //chartCanvas.width = chartCanvas.width + 10 ;
@@ -52,7 +52,18 @@ Item {
 //              }
        }
    }
+ Rectangle{
+     id:underChartft
+     anchors.fill: chartCanvas
+     gradient: Gradient{
+         GradientStop{position: 1 ;color:"blue" }
+         GradientStop{position: 0 ;color:"transparent" }
 
+
+       }
+
+     opacity: .05
+   }
   Canvas{
      id:chartCanvas
      width: batteryChart.width*5
@@ -60,6 +71,7 @@ Item {
 
      property int canvasX: 0
      property int canvasY: batteryChart.lineY
+     property int canvasbottom: height
      property color lColor: batteryChart.lineColor
 
 
@@ -68,8 +80,8 @@ Item {
           id:clearChart
           anchors.fill: parent
           onClicked:{
-                 batState = !batState
-             // chartCanvas.clear();
+                // batState = !batState
+              chartCanvas.clear();
            }
          // onPositionChanged: batteryChart.requestPaint();
 
@@ -91,12 +103,37 @@ Item {
          canvasX=batteryChart.lineX ;
          canvasY=batteryChart.lineY ;
          ctx.lineTo(canvasX,canvasY);
+
+         //ctx.moveTo(canvasX,canvasbottom);
+        // ctx.lineTo(canvasX,canvasbottom);
+         // ctx.clip()
+//         ctx.shadowColor = "#2ed5fa";
+//         ctx.shadowOffsetX = 0;
+//         ctx.shadowOffsetY = 5;
+//         ctx.shadowBlur = 0.005;
          ctx.stroke();
+
+
+         ctx.beginPath();
+         var gradient = ctx.createLinearGradient(canvasX, canvasY,canvasX,canvasbottom);
+         gradient.addColorStop(1,"transparent");
+         gradient.addColorStop(0,"#416870");
+         ctx.fillStyle = gradient;
+         ctx.fillRect(canvasX, canvasY,1,canvasbottom);
+         //ctx.rect(canvasX, canvasY, 1,canvasY);
+         ctx.stroke();
+
+
+
 
        }
 
 
-
    }
+
+  Behavior on lineY {
+      NumberAnimation { duration: 200 }
+
+  }
 
 }
