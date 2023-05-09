@@ -1,7 +1,7 @@
 import QtQuick 2.15
 
 Item {
-     id:mainBattery
+    id:mainBattery
 
     property int socValue: 75      // from 0 to 100
     property int sohValue: 100      // from 0 to 100
@@ -13,7 +13,7 @@ Item {
     height :220
     //anchors.fill: parent
 
-    Image{
+  Image{
     id:circle
     source: "qrc:/img/gauge_circle.png"
     fillMode: Image.PreserveAspectFit
@@ -27,13 +27,13 @@ Item {
         id:batterySoc
         anchors.centerIn: parent
         size: 900
-        percent: mainBattery.socValue
-        value: mapper()
+        socValue: mainBattery.socValue
+       // value: mapper()
         start: 180
         end:315
 
         function mapper(){
-           return (percent - 0) / (100 - 0) * (end - start) ;
+           return (socValue - 0) / (100 - 0) * (end - start) ;
         }
 
         Image {
@@ -49,7 +49,7 @@ Item {
         anchors.centerIn: parent
         visible: soVisiblity      //to make it invisible in battery Page
         size: 700
-        value: mainBattery.sohValue
+        socValue:sohValue
         lineWidth: 15
         percentage: ""
         primaryColor: "#05f228"
@@ -74,7 +74,7 @@ Item {
         anchors.centerIn: parent
         visible: soVisiblity      //to make it invisible in battery Page
         size: 700
-        value: mainBattery.sotValue
+        socValue: mainBattery.sotValue
         lineWidth: 15
         percentage: ""
         primaryColor: "#f2916e"
@@ -94,5 +94,21 @@ Item {
             source: "qrc:/img/battery_temperature.png"
         }
     }
-}
+ }
+    onSocValueChanged: {
+        if(socValue <= 20){
+            socIcon.source="qrc:/img/low-battery-level.png"
+            socIcon.scale=3.5
+        } else if(socValue <= 30){
+            socIcon.source="qrc:/img/lowbatterylevel.png"
+           socIcon.scale=3.5
+        } else if(socValue <= 80) {
+            socIcon.source="qrc:/img/battery_soc2.png"
+            socIcon.scale=1.6
+        } else if(socValue > 80) {
+            socIcon.source="qrc:/img/fullbattery.png"
+            socIcon.scale=3.5
+        }
+
+    }
 }

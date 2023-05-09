@@ -4,9 +4,9 @@ Item {
     id: root
 
 
-    property real value: 0
-    property real percent : 0
-    property string percentage: percent+"%"
+
+    property int socValue : 0
+    property string percentage: socValue+"%"
     property int size:300
     property int arcLength: root.end-root.start
     property real start:100
@@ -15,27 +15,19 @@ Item {
     property int lineWidth: root.size/30
 
 
- FontLoader { id:aldo ; source: "AldotheApache.ttf" }
     property string iconSource: "qrc:/battery_soc2.png"
-  //  property string gaugeName: "Speed"
+
 
     property color primaryColor: "#06c7f2"      //fillcolor
     property color secondaryColor:  "transparent"    //no fillcolor
-
     property int animationDuration: 500
+
 
     width: size
     height: size
 
-//    Text{
-//        id:uniteText
-//        anchors.top: valueText.bottom
-//        anchors.horizontalCenter: valueText.horizontalCenter
-//        text: root.unite
-//        font.bold: true
-//        font.pixelSize: 20
-//        color: "#143a8c"
-//    }
+
+    FontLoader { id:aldo ; source: "AldotheApache.ttf" }
 
 
     Text{
@@ -66,8 +58,8 @@ Item {
         id: canvas
         property real startA:root.start
         property real endA :root.end
-        property real degree: ((root.value*root.arcLength)/100)-3
-       //  property real value: slid1.value
+        property real degree: ((root.socValue*root.arcLength)/100)-3
+
 
         anchors.fill: parent
         antialiasing: true

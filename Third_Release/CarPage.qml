@@ -2,31 +2,42 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 Item{
     id:carpage
-    Image {
-        id: carBG
-        anchors.fill: parent
-        source: "qrc:/img/blank.jpg"
-    }
-
-    property int transTime: 500
-    property int door: 0
-    property int frontlight: 0
-    property int backlight: 0
+//    Image {
+//        id: carBG
+//        anchors.fill: parent
+//        source: "qrc:/img/blank.jpg"
+//    }
 
 
-    property int tire1: 25
-    property int tire2: 26
-    property int tire3: 26
-    property int tire4: 26
+    property bool turnRight:mainWindow.turnRight  //should be adjusted to Defualt 0 ->false
+    property bool turnLeft:mainWindow.turnLeft
+    property bool seatBelt:mainWindow.seatBelt
+    property bool lights: mainWindow.lights
+    property bool chargingState :mainWindow.chargingState
+    property bool door: mainWindow.door
+    property bool frontlight:mainWindow.frontlight
+    property bool backlight:mainWindow.backlight
 
-    property int setPressure: 26            //normal tire pressure
+    property int transTime: mainWindow.transTime
+    property int speedValue: mainWindow.speedValue
+    property int heatValue: mainWindow.heatValue
+    property int socValue: mainWindow.socValue     // from 0 to 100
+    property int sohValue: mainWindow.sohValue     // from 0 to 100
+    property int sotValue: mainWindow.sotValue    // from 0 to 100
 
+    property int tire1: mainWindow.tire1
+    property int tire2: mainWindow.tire2
+    property int tire3: mainWindow.tire3
+    property int tire4: mainWindow.tire4
+    property int setPressure: mainWindow.setPressure
 
     property int flag1: 0
     property int flag2: 0
     property int flag3: 0
     property int flag0: 0
-//    property string cstate: ""
+
+    property string smode: mainWindow.smode
+
     anchors.fill: parent
 
     FontLoader { id:aldo ; source: "AldotheApache.ttf" }
@@ -96,7 +107,7 @@ Item{
 
 
     onBacklightChanged: {
-        if(backlight)
+        if(carpage.backlight)
             backon.start();
         else
             backoff.start();
@@ -163,49 +174,49 @@ Item{
 
       Image {
           id: outerTire2
-          width: tire2 < setPressure ? parent.width/38 :parent.width/33.6
+          width: carpage.tire2 < carpage.setPressure ? parent.width/38 :parent.width/33.6
           anchors{
               top: tireRect2.bottom
-              topMargin: tire2 < setPressure ? 5 : 3
+              topMargin: carpage.tire2 < carpage.setPressure ? 5 : 3
               right: tireRect2.right
-              rightMargin:tire2 < setPressure ? -15 : -20
+              rightMargin:carpage.tire2 < carpage.setPressure ? -15 : -20
           }
           rotation: -5
           opacity:1
-          source:  tire2 < setPressure ? "qrc:/img/redTire.png" :"qrc:/img/greenTire.png"
+          source:  carpage.tire2 < carpage.setPressure ? "qrc:/img/redTire.png" :"qrc:/img/greenTire.png"
           fillMode:Image.PreserveAspectFit
 
        }
 
       Image {
           id: outerTire3
-          width: tire3 < setPressure ? parent.width/38 :parent.width/33.6
+          width: carpage.tire3 < carpage.setPressure ? parent.width/38 :parent.width/33.6
           anchors{
               top: tireRect3.bottom
-              topMargin: tire3 < setPressure ? 5 : 3
+              topMargin: carpage.tire3 < carpage.setPressure ? 5 : 3
               right: tireRect3.right
-              rightMargin:tire3 < setPressure ? -15 : -20
+              rightMargin:carpage.tire3 < carpage.setPressure ? -15 : -20
           }
           rotation: -5
           opacity:1
-          source:  tire3 < setPressure ? "qrc:/img/redTire.png" :"qrc:/img/greenTire.png"
+          source:  carpage.tire3 < carpage.setPressure ? "qrc:/img/redTire.png" :"qrc:/img/greenTire.png"
           fillMode:Image.PreserveAspectFit
 
        }
 
       Image {
           id: outerTire4
-          width: tire4 < setPressure ? parent.width/39 :parent.width/38
-          height: tire4 < setPressure ? parent.width/26 :parent.width/30
+          width: carpage.tire4 < carpage.setPressure ? parent.width/39 :parent.width/38
+          height: carpage.tire4 < carpage.setPressure ? parent.width/26 :parent.width/30
           anchors{
               bottom: tireRect4.bottom
-              bottomMargin: tire4 < setPressure ? -30 : -28
+              bottomMargin: carpage.tire4 < carpage.setPressure ? -30 : -28
               right: tireRect4.left
               rightMargin:0
           }
           rotation: 170
           opacity:1
-          source:  tire4 < setPressure ? "qrc:/img/redTire.png" :"qrc:/img/greenTire.png"
+          source:  carpage.tire4 < carpage.setPressure ? "qrc:/img/redTire.png" :"qrc:/img/greenTire.png"
          // fillMode:Image.PreserveAspectFit
 
        }
@@ -227,7 +238,7 @@ Item{
 
          // anchors.centerIn: parent
           //anchors.verticalCenter:  base.verticalCenter
-          opacity: !backlight
+          opacity: !carpage.backlight
           scale: 0.6
       }
       Image {
@@ -238,7 +249,7 @@ Item{
 
          // anchors.centerIn: parent
           //anchors.verticalCenter:  base.verticalCenter
-          opacity: backlight
+          opacity: carpage.backlight
           scale: 0.6
       }
       Image {
@@ -281,7 +292,7 @@ Item{
            property: "opacity"
            from:0
            to:1
-           duration: transTime
+           duration: carpage.transTime
             }
 
 
@@ -290,7 +301,7 @@ Item{
                      property: "opacity"
                       from:1
                       to:0
-                     duration: transTime
+                     duration: carpage.transTime
                      }
 
 
@@ -300,7 +311,7 @@ Item{
            property: "opacity"
            from:1
            to:0
-           duration: transTime
+           duration: carpage.transTime
             }
 
        NumberAnimation{
@@ -308,7 +319,7 @@ Item{
            property: "opacity"
            from:1
            to:0
-           duration: transTime
+           duration: carpage.transTime
             }
         }
      //   }
@@ -319,7 +330,7 @@ Item{
           property: "opacity"
           from:0
           to:1
-          duration: transTime
+          duration: carpage.transTime
       }
 
       NumberAnimation{
@@ -327,21 +338,21 @@ Item{
           property: "opacity"
           from:1
           to:0
-          duration: transTime
+          duration: carpage.transTime
       }
       NumberAnimation{
           target:{flag2 ? lwithoutD :textt}
           property: "opacity"
           from:1
           to:0
-          duration: transTime
+          duration: carpage.transTime
       }
       NumberAnimation{
           target:{flag0 ? base :textt}
           property: "opacity"
           from:1
           to:0
-          duration: transTime
+          duration: carpage.transTime
       }
 
   }
@@ -352,28 +363,28 @@ Item{
           property: "opacity"
           from:0
           to:1
-          duration: transTime
+          duration: carpage.transTime
       }
       NumberAnimation{
           target:{flag1 ? doorwithoutL :textt}
           property: "opacity"
           from:1
           to:0
-          duration: transTime
+          duration: carpage.transTime
       }
       NumberAnimation{
           target:{flag3? doorwithL :textt}
           property: "opacity"
           from:1
           to:0
-          duration: transTime
+          duration: carpage.transTime
       }
       NumberAnimation{
           target:{flag0 ? base :textt}
           property: "opacity"
           from:1
           to:0
-          duration: transTime
+          duration: carpage.transTime
       }
   }
   ParallelAnimation{
@@ -383,28 +394,28 @@ Item{
           property: "opacity"
           from:0
           to:1
-          duration: transTime
+          duration: carpage.transTime
       }
       NumberAnimation{
           target:{flag1 ? doorwithoutL :textt}
           property: "opacity"
           from:1
           to:0
-          duration: transTime
+          duration: carpage.transTime
       }
       NumberAnimation{
           target:{flag2 ? lwithoutD :textt}
           property: "opacity"
           from:1
           to:0
-          duration: transTime
+          duration: carpage.transTime
       }
       NumberAnimation{
           target:{flag0 ? base :textt}
           property: "opacity"
           from:1
           to:0
-          duration: transTime
+          duration: carpage.transTime
       }
   }
 
@@ -415,7 +426,7 @@ Item{
          property: "opacity"
          from:0
          to:1
-         duration: transTime
+         duration: carpage.transTime
         }
 
 
@@ -424,7 +435,7 @@ Item{
            property: "opacity"
            from:1
            to:0
-           duration: transTime
+           duration: carpage.transTime
         }
     }
   ParallelAnimation{
@@ -434,7 +445,7 @@ Item{
          property: "opacity"
          from:1
          to:0
-         duration: transTime
+         duration: carpage.transTime
         }
 
 
@@ -443,58 +454,30 @@ Item{
            property: "opacity"
            from:0
            to:1
-           duration: transTime
+           duration: carpage.transTime
         }
     }
 
-  Rectangle{
-      width:350
-      height: 350
-     // color: "#021240"
-      gradient: Gradient {
-               GradientStop { position: 1.0; color: "black" }  // "lightsteelblue"
-               GradientStop { position: 0.0; color: "blue" }
-           }
-      radius: 200
-      anchors.centerIn: naviGear
-  }
-  Rectangle{
-
-      width:350
-      height: 350
-     // color: "#021240"
-      gradient: Gradient {
-               GradientStop { position: 1.0; color: "black" }  // "lightsteelblue"
-               GradientStop { position: 0.0; color: "blue" }
-           }
-      radius: 200
-      anchors{
-          top: naviBattery.top
-          topMargin: 70
-          left: naviBattery.left
-          leftMargin: 70
-      }
-  }
 
 
   Speed_Gauge{
       id:naviGear
-      scale: 0.35
-      x:-330
-      y:-70
-      value1: 180
-      smode: "driving"
+      scale: 0.25
+      x:-300
+      y:-165
+      speedValue: carpage.speedValue
+      smode: carpage.smode
    }
 
   BatteryGauge{
 
       id:naviBattery
-     scale : 0.35
-      x:1500
-      y:185
-      socValue: 75
-      sohValue: 75
-      sotValue: 70
+     scale : 0.25
+      x:1520
+      y:135
+      socValue: carpage.socValue
+      sohValue: carpage.sohValue
+      sotValue: carpage.sotValue
    }
 
   Rectangle{
@@ -517,17 +500,17 @@ Item{
    }
   Image {
       id: outerTire1
-      width: tire1 < setPressure ? parent.width/39 :parent.width/34
-      height: tire1 < setPressure ? parent.width/26 :parent.width/28
+      width: carpage.tire1 < carpage.setPressure ? parent.width/39 :parent.width/34
+      height: carpage.tire1 < carpage.setPressure ? parent.width/26 :parent.width/28
       anchors{
           bottom: tireRect1.bottom
-          bottomMargin: tire1 < setPressure ? -30 : -28
+          bottomMargin: carpage.tire1 < carpage.setPressure ? -30 : -28
           right: tireRect1.left
           rightMargin:10
       }
       rotation: -10
       opacity:1
-      source:  tire1 < setPressure ? "qrc:/img/redTire.png" :"qrc:/img/greenTire.png"
+      source:  carpage.tire1 < carpage.setPressure ? "qrc:/img/redTire.png" :"qrc:/img/greenTire.png"
      // fillMode:Image.PreserveAspectFit
 
    }
@@ -543,8 +526,8 @@ Item{
       font.family:aldo.name
       font.pixelSize: 16
       font.bold: true
-      color:  tire1 < setPressure ? "red" :"green"
-      text: tire1+" bar"
+      color:  carpage.tire1 < carpage.setPressure ? "red" :"green"
+      text: carpage.tire1+" bar"
   }
   Text {
       id: temTire1
@@ -593,8 +576,8 @@ Item{
       opacity: 0.9
       font.family:aldo.name
       font.pixelSize:16
-      color:  tire2 < setPressure ? "red" :"green"
-      text: tire2+" bar"
+      color:  carpage.tire2 < carpage.setPressure ? "red" :"green"
+      text: carpage.tire2+" bar"
   }
   Text {
       id: temTire2
@@ -643,8 +626,8 @@ Item{
       font.family:aldo.name
       font.pixelSize: 16
       font.bold: true
-      color:  tire3 < setPressure ? "red" :"green"
-      text: tire3+" bar"
+      color:  carpage.tire3 < carpage.setPressure ? "red" :"green"
+      text: carpage.tire3+" bar"
   }
   Text {
       id: temTire3
@@ -692,8 +675,8 @@ Item{
       opacity: 0.9
       font.family:aldo.name
       font.pixelSize:16
-      color:  tire4 < setPressure ? "red" :"green"
-      text: tire4+" bar"
+      color:  carpage.tire4 < carpage.setPressure ? "red" :"green"
+      text: carpage.tire4+" bar"
   }
   Text {
       id: temTire4

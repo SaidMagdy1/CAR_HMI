@@ -7,8 +7,9 @@ Item
     width: 1000
     height: 1000
     visible: true
-    property real value1: sp.currentv
-    property string smode: "neutral"
+    property int speedValue: 150
+    property int heatValue:10
+    property string smode: "reverse"
     property real heatend: 90
     property bool speedVisiblity: true
 
@@ -102,28 +103,36 @@ Item
             font.pointSize: 35
             color: "#726e6d"
             y:570
-            x: select()
+            x:400//select()
             function select() {
                 var d=0
-                if(smode=="parking") {
-                d= 485
-            } else if(smode=="neutral") {
-                d= 418
-            }  else if(smode=="driving") {
-                    d= 351
-            }  else if(smode=="reverse") {
-                    d= 284
+                if(speed.smode=="parking") {
+                d= 384
+            } else if(speed.smode=="neutral") {
+                d= 451
+            }  else if(speed.smode=="driving") {
+                   d= 518
+            }  else if(speed.smode=="reverse") {
+                    d= 585
             }
                 return d
             }
-        }
 
+        }
         Image {
             id: modeselection
             source: "img/mode_selector.png"
-            x:470
+            x:mode.select()
             y:555
+            Behavior on x{
+                NumberAnimation{
+                    duration: 500
+                }
+
+            }
         }
+
+
         Text {
             id: modeselected
             text: select()
@@ -133,13 +142,13 @@ Item
             anchors.centerIn: modeselection
             function select() {
                 var d="n"
-                if(smode=="parking") {
+                if(speed.smode=="parking") {
                 d= "p"
-            } else if(smode=="neutral") {
+            } else if(speed.smode=="neutral") {
                 d= "n"
-            }  else if(smode=="driving") {
+            }  else if(speed.smode=="driving") {
                     d= "d"
-            }  else if(smode=="reverse") {
+            }  else if(speed.smode=="reverse") {
                     d= "r"
             }
                 return d
@@ -151,7 +160,7 @@ Item
           anchors.centerIn: parent
           start: 138
           end : (start-5+currentv*1.125)
-          currentv: speed.value1
+          currentv: speed.speedValue
           height: (background.height)-106
           width: height
           linesize: 27
@@ -165,7 +174,7 @@ Item
 
           Text {
               id: gvalue
-              text: value1
+              text: speed.speedValue
               font.family: aldotheapache.name
               font.pointSize: 100
               color: "#06c7f2"
@@ -178,8 +187,8 @@ Item
 
         SGauge{
             id: heat
-            visible: speedVisiblity
-
+            visible: speed.speedVisiblity
+            currentv: speed.heatValue
             anchors.centerIn: parent
             start: 45
             end : heatend

@@ -4,8 +4,8 @@ Item {
     id: root
 
 
-    property real value: 0
-    property string percentage: root.value+"%"
+    property real socValue: 0
+    property string percentage: socValue+"%"
     property int size:300
     property int arcLength: root.end-root.start
     property real start:100
@@ -41,8 +41,7 @@ Item {
         id:percentText   //Value
         x:parent.width/2-100
         y:parent.height/2-180
-//        anchors.horizontalCenter: icon.horizontalCenter
-//        anchors.bottomMargin: 20
+
         text: percentage
         font.bold: true
         font.pixelSize:90
@@ -66,7 +65,7 @@ Item {
         id: canvas
         property real startA:root.start
         property real endA :root.end
-        property real degree: (root.value*root.arcLength)/100
+        property real degree: (root.socValue*root.arcLength)/100
        //  property real value: slid1.value
 
         anchors.fill: parent

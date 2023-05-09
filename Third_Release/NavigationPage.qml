@@ -13,16 +13,24 @@ Item{
     height:500 // parent.height-200
     anchors.centerIn: parent
 
-    property string mapStyle: "mapbox://styles/olewandowski2/cjrakjdzm2jf12sp9rdgwncmh"
+    property int speedValue: mainWindow.speedValue
+    property int heatValue: mainWindow.heatValue
+    property int socValue: mainWindow.socValue     // from 0 to 100
+    property int sohValue: mainWindow.sohValue     // from 0 to 100
+    property int sotValue: mainWindow.sotValue    // from 0 to 100
+
+    property string smode: mainWindow.smode
+
+
+
+    //property string mapStyle: "mapbox://styles/olewandowski2/cjrakjdzm2jf12sp9rdgwncmh"
     property real naviTilt: 30
     property real zoom: 16.0
 
     property real carPositionX: 31.2
     property real carPositionY: 29.9
 
-//    Simulation {
-//        id: simulation
-//    }
+
 
 
 
@@ -190,10 +198,6 @@ Item{
         }
 
 
-        Header{
-          id:naviHeader
-         }
-
 
 //        bearing: 30
 //        tilt: naviTilt
@@ -290,6 +294,23 @@ Item{
 //        }
 //    }
 
+    Rectangle{
+        id : root
+        x:760
+
+        width: parent.width/5
+        height:parent.height/8.5
+        radius:50
+        anchors{
+            top: parent.top
+
+        }
+
+        gradient: Gradient {
+            GradientStop { position: 1.0; color: "black" }  // "lightsteelblue"
+            GradientStop { position: 0.0; color: "blue" }
+        }
+    }
 
     Rectangle{
         width:350
@@ -341,18 +362,17 @@ Item{
       scale: 0.35
       x:-330
       y:-70
-      value1: 180
-      smode: "driving"
+      speedValue:naviFrame.speedValue
+      smode:naviFrame.smode
     }
-
     BatteryGauge{
         id:naviBattery
        scale : 0.35
         x:1500
         y:185
-        socValue: 75
-        sohValue: 75
-        sotValue: 70
+        socValue: naviFrame.socValue
+        sohValue: naviFrame.sohValue
+        sotValue: naviFrame.sotValue
     }
     Rectangle {
         id: routeReset

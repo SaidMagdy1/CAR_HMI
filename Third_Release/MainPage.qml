@@ -3,32 +3,38 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 Item{
     id:mainPage
-    property bool turnRight: true    //should be adjusted to Defualt 0 ->false
-    property bool turnLeft: true
-    property bool seatBelt: false
-    property bool lights: false
-    property bool chargingState :false
-
-    //property bool pressureAlarm: true
-    property bool lowPower: false
     property bool flasher: false
+    property int transTime: mainWindow.transTime
+    property bool smallPage: mainWindow.smallPage
 
+    property bool turnRight:mainWindow.turnRight  //should be adjusted to Defualt 0 ->false
+    property bool turnLeft:mainWindow.turnLeft
+    property bool seatBelt:mainWindow.seatBelt
+    property bool lights: mainWindow.lights
+    property bool chargingState :mainWindow.chargingState
+    property bool door: mainWindow.door
+    property bool frontlight:mainWindow.frontlight
+    property bool backlight:mainWindow.backlight
 
-    property int transTime: 500
-    property int door: 0
-    property int frontlight: 0
+    property int speedValue: mainWindow.speedValue
+    property int heatValue: mainWindow.heatValue
+    property int socValue: mainWindow.socValue     // from 0 to 100
+    property int sohValue: mainWindow.sohValue     // from 0 to 100
+    property int sotValue: mainWindow.sotValue    // from 0 to 100
 
-    property int tire1: 25
-    property int tire2: 26
-    property int tire3: 26
-    property int tire4: 26
-
+    property int tire1: mainWindow.tire1
+    property int tire2: mainWindow.tire2
+    property int tire3: mainWindow.tire3
+    property int tire4: mainWindow.tire4
     property int flag1: 0
     property int flag2: 0
     property int flag3: 0
     property int flag0: 0
 
-    property bool smallPage: true
+    property string smode: mainWindow.smode
+
+
+
 
     //------to_Adjust_Car2D_In_Different_Sizes----------
     property int xErorr: 350
@@ -81,16 +87,17 @@ Item{
        scale : 0.45
         x:1270
         y:0
-        socValue: 75
-        sohValue: 75
-        sotValue: 70
+        socValue: mainPage.socValue
+        sohValue: mainPage.sohValue
+        sotValue: mainPage.sotValue
     }
     Speed_Gauge{
       scale: 0.45
       x:-150
       y:-215
-      value1: 180
-      smode: "driving"
+      speedValue: mainPage.speedValue
+      heatValue: mainPage.heatValue
+      smode: mainPage.smode
     }
 
 
@@ -164,7 +171,7 @@ Item{
         height: 400
         anchors.centerIn: parent
         color: "transparent"
-        visible: !smallPage
+        visible: !mainPage.smallPage
 //-------------------------------Tire1----------------
         Rectangle{
             id:fRightTire
@@ -174,7 +181,7 @@ Item{
             height: 40
             radius: 10
             opacity: 1
-            color: tire1 < 26 ? "red" :"green"
+            color: mainPage.tire1 < 26 ? "red" :"green"
         }
         Image {
             id: arrow1
@@ -187,7 +194,7 @@ Item{
             }
             rotation: -45
             opacity:1
-            source:  tire1 < 26 ? "qrc:/img/red_arrow.png" :"qrc:/img/green_arrow.png"
+            source:  mainPage.tire1 < 26 ? "qrc:/img/red_arrow.png" :"qrc:/img/green_arrow.png"
             fillMode:Image.PreserveAspectFit
 
         }
@@ -202,8 +209,8 @@ Item{
             font.family:aldo.name
             font.pixelSize: 20
             font.bold: true
-            color:  tire1 < 26 ? "red" :"green"
-            text: tire1+" bar"
+            color:  mainPage.tire1 < 26 ? "red" :"green"
+            text: mainPage.tire1+" bar"
         }
 //-------------------------------Tire2----------------
         Rectangle{
@@ -214,7 +221,7 @@ Item{
             height: 40
             radius: 10
             opacity: 1
-            color: tire2 < 26 ? "red" :"green"
+            color: mainPage.tire2 < 26 ? "red" :"green"
         }
         Image {
             id: arrow2
@@ -228,7 +235,7 @@ Item{
            rotation:45
 
             opacity:1
-            source:  tire2 < 26 ? "qrc:/img/red_arrow180.png" :"qrc:/img/green_arrow180.png"
+            source:  mainPage.tire2 < 26 ? "qrc:/img/red_arrow180.png" :"qrc:/img/green_arrow180.png"
             fillMode:Image.PreserveAspectFit
 
         }
@@ -243,8 +250,8 @@ Item{
             font.family:aldo.name
             font.pixelSize: 20
             font.bold: true
-            color:  tire2 < 26 ? "red" :"green"
-            text: tire2+" bar"
+            color:  mainPage.tire2 < 26 ? "red" :"green"
+            text: mainPage.tire2+" bar"
         }
 //-------------------------------Tire3----------------
         Rectangle{
@@ -255,7 +262,7 @@ Item{
             height: 40
             radius: 10
             opacity: 1
-            color: tire3 < 26 ? "red" :"green"
+            color: mainPage.tire3 < 26 ? "red" :"green"
         }
         Image {
             id: arrow3
@@ -268,7 +275,7 @@ Item{
             }
             rotation: -45
             opacity:1
-            source:  tire2 < 26 ? "qrc:/img/red_arrow.png" :"qrc:/img/green_arrow.png"
+            source:  mainPage.tire2 < 26 ? "qrc:/img/red_arrow.png" :"qrc:/img/green_arrow.png"
             fillMode:Image.PreserveAspectFit
 
         }
@@ -283,8 +290,8 @@ Item{
             font.family:aldo.name
             font.pixelSize: 20
             font.bold: true
-            color:  tire3 < 26 ? "red" :"green"
-            text: tire3+" bar"
+            color:  mainPage.tire3 < 26 ? "red" :"green"
+            text: mainPage.tire3+" bar"
         }
 //-------------------------------Tire4----------------
         Rectangle{
@@ -295,7 +302,7 @@ Item{
             height: 40
             radius: 10
             opacity: 1
-            color: tire4 < 26 ? "red" :"green"
+            color: mainPage.tire4 < 26 ? "red" :"green"
         }
         Image {
             id: arrow4
@@ -309,7 +316,7 @@ Item{
            rotation:45
 
             opacity:1
-            source:  tire4 < 26 ? "qrc:/img/red_arrow180.png" :"qrc:/img/green_arrow180.png"
+            source:  mainPage.tire4 < 26 ? "qrc:/img/red_arrow180.png" :"qrc:/img/green_arrow180.png"
             fillMode:Image.PreserveAspectFit
 
         }
@@ -324,8 +331,8 @@ Item{
             font.family:aldo.name
             font.pixelSize: 20
             font.bold: true
-            color:  tire4 < 26 ? "red" :"green"
-            text: tire2+" bar"
+            color:  mainPage.tire4 < 26 ? "red" :"green"
+            text: mainPage.tire4+" bar"
         }
 
         Image {
@@ -352,7 +359,7 @@ Item{
     Rectangle{
         id:carItem
 
-        visible: smallPage
+        visible: mainPage.smallPage
        anchors.fill: parent
        color:"transparent"
 
@@ -374,7 +381,7 @@ Item{
             scale: 0.6
             MouseArea{
                 anchors.fill: parent
-                onClicked: smallPage =!smallPage
+                onClicked: mainPage.smallPage =!mainPage.smallPage
             }
        }
 
@@ -425,7 +432,7 @@ Item{
                 property: "opacity"
                 from:1
                 to:0
-                duration: transTime
+                duration: mainPage.transTime
             }
 
 
@@ -435,7 +442,7 @@ Item{
                property: "opacity"
                from:1
                to:0
-               duration: transTime
+               duration: mainPage.transTime
                 }
 
            NumberAnimation{
@@ -443,7 +450,7 @@ Item{
                property: "opacity"
                from:1
                to:0
-               duration: transTime
+               duration: mainPage.transTime
                 }
             }
 
@@ -454,7 +461,7 @@ Item{
               property: "opacity"
               from:0
               to:1
-              duration: transTime
+              duration: mainPage.transTime
           }
 
           NumberAnimation{
@@ -462,21 +469,21 @@ Item{
               property: "opacity"
               from:1
               to:0
-              duration: transTime
+              duration: mainPage.transTime
           }
           NumberAnimation{
               target:{flag2 ? lwithoutD :textt}
               property: "opacity"
               from:1
               to:0
-              duration: transTime
+              duration: mainPage.transTime
           }
           NumberAnimation{
               target:{flag0 ? base :textt}
               property: "opacity"
               from:1
               to:0
-              duration: transTime
+              duration: mainPage.transTime
           }
 
       }
@@ -487,28 +494,28 @@ Item{
               property: "opacity"
               from:0
               to:1
-              duration: transTime
+              duration: mainPage.transTime
           }
           NumberAnimation{
               target:{flag1 ? doorwithoutL :textt}
               property: "opacity"
               from:1
               to:0
-              duration: transTime
+              duration: mainPage.transTime
           }
           NumberAnimation{
               target:{flag3? doorwithL :textt}
               property: "opacity"
               from:1
               to:0
-              duration: transTime
+              duration: mainPage.transTime
           }
           NumberAnimation{
               target:{flag0 ? base :textt}
               property: "opacity"
               from:1
               to:0
-              duration: transTime
+              duration: mainPage.transTime
           }
       }
       ParallelAnimation{
@@ -518,28 +525,28 @@ Item{
               property: "opacity"
               from:0
               to:1
-              duration: transTime
+              duration: mainPage.transTime
           }
           NumberAnimation{
               target:{flag1 ? doorwithoutL :textt}
               property: "opacity"
               from:1
               to:0
-              duration: transTime
+              duration: mainPage.transTime
           }
           NumberAnimation{
               target:{flag2 ? lwithoutD :textt}
               property: "opacity"
               from:1
               to:0
-              duration: transTime
+              duration: mainPage.transTime
           }
           NumberAnimation{
               target:{flag0 ? base :textt}
               property: "opacity"
               from:1
               to:0
-              duration: transTime
+              duration: mainPage.transTime
           }
       }
 
@@ -550,7 +557,7 @@ Item{
     Timer{
         id:turnTimer
         interval: 500
-        running: turnRight || turnLeft
+        running: mainPage.turnRight || mainPage.turnLeft
         repeat: true
         onTriggered: flasher = !flasher
     }
@@ -560,7 +567,7 @@ Item{
         x:parent.width-parent.width/3
         y:parent.height/5
         width: parent.width/30
-        visible:turnRight && flasher
+        visible:mainPage.turnRight && flasher
         fillMode: Image.PreserveAspectFit
         source: "qrc:/img/turn-signal_right.png"
     }
@@ -569,59 +576,75 @@ Item{
         x:parent.width/3.5
         y:parent.height/5
         width: parent.width/30
-        visible: turnLeft && flasher
+        visible: mainPage.turnLeft && flasher
         fillMode: Image.PreserveAspectFit
         source: "qrc:/img/turn-signal_left.png"
     }
     Image {
         id: beltAlarm
-        x:parent.width-parent.width/3+50
-        y:parent.height-parent.height/5
-        width: parent.width/33
-        //visible: seatBelt
+        x:500
+        y:450
+        width:seatBelt ?  parent.width/30 : parent.width/33
+//        anchors{
+//            bottom: Speed_Gauge.bottom
+//            bottomMargin: 30
+//            right: Speed_Gauge.right
+//            rightMargin: 30
+//        }
+
+        opacity: mainPage.seatBelt ? 2 : 0.3
         fillMode: Image.PreserveAspectFit
-        source: seatBelt ? "qrc:/img/seat-belt-on.png" :"qrc:/img/seat-belt-off.png"
+        source: mainPage.seatBelt ? "qrc:/img/red_belt.png" :"qrc:/img/seat-belt-off.png"
     }
     Image {
         id: pressureAlarm
         anchors{
             bottom: beltAlarm.top
+            bottomMargin: 20
             right: beltAlarm.right
-            rightMargin: 25
+            rightMargin: -45
         }
 
         width: parent.width/35
        // visible: tire1<26 || tire2<26 || tire3<26 || tire4<26
         fillMode: Image.PreserveAspectFit
-      source: tire1<26 || tire2<26 || tire3<26 || tire4<26 ? "qrc:/img/tireP-obb.png":"qrc:/img/tireP-off.png"
+      source: mainPage.tire1<26 || mainPage.tire2<26 || mainPage.tire3<26 || mainPage.tire4<26 ? "qrc:/img/tireP-obb.png":"qrc:/img/tireP-off.png"
     }
 
-    Image {
-        id: chargeAlarm
-        anchors{
-            bottom: pressureAlarm.top
-            bottomMargin: 30
-            right: beltAlarm.left
-            rightMargin: 20
-        }
 
-        width: parent.width/40
-       // visible: lowPower
-        fillMode: Image.PreserveAspectFit
-        source:lowPower ? "qrc:/img/electric-car.png" :""
-    }
     Image {
         id: lightSignal
        anchors{
            bottom:pressureAlarm.top
            bottomMargin: 30
            right: pressureAlarm.right
-           rightMargin: 35
+           rightMargin: -25
        }
         width: parent.width/42
 
         fillMode: Image.PreserveAspectFit
-        source: lights ? "qrc:/img/car-lights-on.png" :"qrc:/img/car-lights-off.png"
+        source: mainPage.lights ? "qrc:/img/car-lights-on.png" :"qrc:/img/car-lights-off.png"
+    }
+    Image {
+        id: chargingstatee
+        x:1325
+        //y:450
+        anchors.verticalCenter: beltAlarm.verticalCenter
+        source: mainPage.chargingState? "qrc:/img/charging-on.png" : "qrc:/img/charging-off.png"
+        scale: 0.5
+    }
+    Image {
+        id: chargeAlarm
+        anchors{
+            verticalCenter:  pressureAlarm.verticalCenter
+            left: chargingstatee.left
+            leftMargin: -50
+        }
+
+        scale: 0.5
+        visible: mainPage.socValue < 21
+        fillMode: Image.PreserveAspectFit
+        source:lowPower ? "qrc:/img/low-battery-on.png" :""
     }
 
 }

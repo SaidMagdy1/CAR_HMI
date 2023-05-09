@@ -104,13 +104,7 @@ Item {
          canvasY=batteryChart.lineY ;
          ctx.lineTo(canvasX,canvasY);
 
-         //ctx.moveTo(canvasX,canvasbottom);
-        // ctx.lineTo(canvasX,canvasbottom);
-         // ctx.clip()
-//         ctx.shadowColor = "#2ed5fa";
-//         ctx.shadowOffsetX = 0;
-//         ctx.shadowOffsetY = 5;
-//         ctx.shadowBlur = 0.005;
+
          ctx.stroke();
 
 
@@ -120,9 +114,16 @@ Item {
          gradient.addColorStop(0,"#416870");
          ctx.fillStyle = gradient;
          ctx.fillRect(canvasX, canvasY,1,canvasbottom);
-         //ctx.rect(canvasX, canvasY, 1,canvasY);
          ctx.stroke();
 
+         //ctx.rect(canvasX, canvasY, 1,canvasY);
+         //ctx.moveTo(canvasX,canvasbottom);
+         // ctx.lineTo(canvasX,canvasbottom);
+         // ctx.clip()
+         //ctx.shadowColor = "#2ed5fa";
+         // ctx.shadowOffsetX = 0;
+         // ctx.shadowOffsetY = 5;
+         // ctx.shadowBlur = 0.005;
 
 
 

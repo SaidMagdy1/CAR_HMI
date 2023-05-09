@@ -87,5 +87,9 @@
         <file>img/battery-page.off.png</file>
         <file>img/battery-page.on.png</file>
         <file>HMchart.qml</file>
+        <file>img/Battery-charging-gif.gif</file>
+        <file>img/fullbattery.png</file>
+        <file>img/lowbatterylevel.png</file>
+        <file>img/low-battery-level.png</file>
     </qresource>
 </RCC>

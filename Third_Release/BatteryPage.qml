@@ -3,17 +3,19 @@ import QtQuick.Controls 2.15
 Item{
     id:batterypage
 
-    property bool seatBelt: false
-    property bool lights: false
-    property bool chargingState :false
+    property bool seatBelt:mainWindow.seatBelt
+    property bool lights: mainWindow.lights
+    property bool chargingState :mainWindow.chargingState
 
-    property int speedValue: 160
-    property int temperature: 60
-    property int helth: 99
-    property int socValue: 75
+    property int speedValue: mainWindow.speedValue
 
-    property string chTime:( 100- socValue)*2 +"min  TO FULL CHARGE"
-    property string carMode: "n o r m a l"
+    property int socValue: mainWindow.socValue     // from 0 to 100
+    property int sohValue: mainWindow.sohValue     // from 0 to 100
+    property int sotValue: mainWindow.sotValue    // from 0 to 100
+
+    property string smode: mainWindow.smode
+    property string carMode:  mainWindow.carMode
+    property string chTime:( 100 - socValue)*2 +"min  TO FULL CHARGE"
 
 
     FontLoader { id:aldo ; source: "AldotheApache.ttf" }
@@ -66,14 +68,15 @@ Item{
 
         color: "lightsteelblue"
 
-        text: qsTr(chTime)
+        text: qsTr(batterypage.chTime)
     }
 
     Speed_Gauge{
         id:speedGauge
         scale: .5
         speedVisiblity: false
-        value1: speedValue
+        speedValue: batterypage.speedValue
+        smode: batterypage.smode
         anchors{
             left: batteryGauge.right
             leftMargin: 70
@@ -110,7 +113,7 @@ Item{
 
         width: parent.width/10.5
         height: parent.height/16
-        text: qsTr(carMode)
+        text: qsTr(batterypage.carMode)
     }
     Image {
         id:modeLeft
@@ -147,7 +150,7 @@ Item{
         width: parent.width/38
 
         fillMode: Image.PreserveAspectFit
-        source: seatBelt ? "qrc:/img/seat-belt-on.png" :"qrc:/img/seat-belt-off.png"
+        source: batterypage.seatBelt ? "qrc:/img/seat-belt-on.png" :"qrc:/img/seat-belt-off.png"
     }
     Image {
         id: lightSignal
@@ -159,12 +162,12 @@ Item{
         width: parent.width/42
 
         fillMode: Image.PreserveAspectFit
-        source: lights ? "qrc:/img/car-lights-on.png" :"qrc:/img/car-lights-off.png"
+        source: batterypage.lights ? "qrc:/img/car-lights-on.png" :"qrc:/img/car-lights-off.png"
     }
     Image {
         id: batteryLow
         x:270
-        visible: socValue < 21
+        visible: batterypage.socValue < 21
        anchors{
            bottom: parent.bottom
            bottomMargin: 50
@@ -183,7 +186,7 @@ Item{
        }
         width: parent.width/42
         fillMode: Image.PreserveAspectFit
-        source: chargingState ? "qrc:/img/charging-on.png": "qrc:/img/charging-off.png"
+        source: batterypage.chargingState ? "qrc:/img/charging-on.png": "qrc:/img/charging-off.png"
     }
     Image {
         id: batteryTem
@@ -199,7 +202,7 @@ Item{
     Rectangle{
         id:temBar
         height: 8
-        width: temperature*2
+        width: batterypage.sotValue*2
         color: "#f2916e"
         anchors{
             left: batteryTem.right
@@ -223,7 +226,7 @@ Item{
     Rectangle{
         id:helthBar
         height: 8
-        width: helth*2
+        width: batterypage.sohValue*2
         color: "#05f228"
         anchors{
             left: batteryHelth.right
@@ -247,7 +250,7 @@ Item{
     Rectangle{
         id:chargeBar
         height: 8
-        width: socValue*2
+        width: batterypage.socValue*2
         color: "#06c7f2"
         anchors{
             left: batteryCharge.right
@@ -261,11 +264,11 @@ Item{
       anchors{
           top: batteryCharge.bottom
           topMargin:0
-          left: batteryCharge.left
+          left: batteryCharge.right
       }
      max:100
      min:0
-     value: socValue
+     value: batterypage.socValue
      rate: 10
       //lineColor: red
    }
