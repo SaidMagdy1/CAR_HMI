@@ -91,5 +91,10 @@
         <file>img/fullbattery.png</file>
         <file>img/lowbatterylevel.png</file>
         <file>img/low-battery-level.png</file>
+        <file>DaignosticBuffer.qml</file>
+        <file>img/arrow-down-sign.png</file>
+        <file>img/full-stop.png</file>
+        <file>img/double-up-arrow.png</file>
+        <file>img/next.png</file>
     </qresource>
 </RCC>

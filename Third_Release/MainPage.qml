@@ -38,7 +38,7 @@ Item{
 
     //------to_Adjust_Car2D_In_Different_Sizes----------
     property int xErorr: 350
-    property int yErorr: 50
+    property int yErorr: 0
 
     FontLoader { id:aldo ; source: "AldotheApache.ttf" }
     //-----------------buttons_for_test--------------
@@ -86,7 +86,7 @@ Item{
         //height: 220
        scale : 0.45
         x:1270
-        y:0
+        y:-40
         socValue: mainPage.socValue
         sohValue: mainPage.sohValue
         sotValue: mainPage.sotValue
@@ -94,7 +94,7 @@ Item{
     Speed_Gauge{
       scale: 0.45
       x:-150
-      y:-215
+      y:-255
       speedValue: mainPage.speedValue
       heatValue: mainPage.heatValue
       smode: mainPage.smode
@@ -583,7 +583,7 @@ Item{
     Image {
         id: beltAlarm
         x:500
-        y:450
+        y:400
         width:seatBelt ?  parent.width/30 : parent.width/33
 //        anchors{
 //            bottom: Speed_Gauge.bottom
@@ -642,7 +642,7 @@ Item{
         }
 
         scale: 0.5
-        visible: mainPage.socValue < 21
+        visible: mainPage.socValue < 26
         fillMode: Image.PreserveAspectFit
         source:lowPower ? "qrc:/img/low-battery-on.png" :""
     }

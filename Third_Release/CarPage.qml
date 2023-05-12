@@ -464,7 +464,7 @@ Item{
       id:naviGear
       scale: 0.25
       x:-300
-      y:-165
+      y:-205
       speedValue: carpage.speedValue
       smode: carpage.smode
    }
@@ -474,7 +474,7 @@ Item{
       id:naviBattery
      scale : 0.25
       x:1520
-      y:135
+      y:90
       socValue: carpage.socValue
       sohValue: carpage.sohValue
       sotValue: carpage.sotValue
@@ -693,4 +693,62 @@ Item{
       text: " 71 C°"
   }
 
+  //----------------signals-------------
+  Image {
+      id: beltAlarm
+     anchors{
+         bottom: parent.bottom
+         bottomMargin: 40
+         right: parent.right
+         rightMargin:300
+     }
+      width: parent.width/38
+
+      fillMode: Image.PreserveAspectFit
+      source: carpage.seatBelt ? "qrc:/img/seat-belt-on.png" :"qrc:/img/seat-belt-off.png"
+  }
+  Image {
+      id: lightSignal
+     anchors{
+         verticalCenter: beltAlarm.verticalCenter
+         right: beltAlarm.left
+         rightMargin: 20
+     }
+      width: parent.width/42
+
+      fillMode: Image.PreserveAspectFit
+      source: carpage.lights ? "qrc:/img/car-lights-on.png" :"qrc:/img/car-lights-off.png"
+  }
+  Image {
+      id: batteryLow
+      x:270
+      visible: carpage.socValue < 26
+     anchors{
+         bottom: parent.bottom
+         bottomMargin: 40
+     }
+      width: parent.width/42
+      fillMode: Image.PreserveAspectFit
+      source: "qrc:/img/low-battery-on.png"
+  }
+  Image {
+      id: batteryCharging
+
+     anchors{
+         bottom: batteryLow.bottom
+         left: batteryLow.right
+         leftMargin: 20
+     }
+      width: parent.width/42
+      fillMode: Image.PreserveAspectFit
+      source: carpage.chargingState ? "qrc:/img/charging-on.png": "qrc:/img/charging-off.png"
+  }
+
+
+
+
+//  DaignosticBuffer{
+//      id:daignostic
+
+//  }
 }

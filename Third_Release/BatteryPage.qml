@@ -30,8 +30,8 @@ Item{
     BatteryGauge{
         id:batteryGauge
         x:parent.width/2-(batteryGauge.width*1.2)
-        y:parent.height/2-(batteryGauge.height*1.25)
-        scale: 0.45
+        y:parent.height/2-(batteryGauge.height*1.2)
+        scale: 0.40
         soVisiblity:false
         socValue: parent.socValue
 
@@ -40,12 +40,12 @@ Item{
     Image {
         id: charging
 
-        width: parent.width/16
+        width: parent.width/17
         anchors{
             bottom: batteryGauge.bottom
-            bottomMargin:-batteryGauge.height*1.25
+            bottomMargin:-batteryGauge.height*1.09
             left: batteryGauge.left
-            leftMargin: batteryGauge.width
+            leftMargin: batteryGauge.width-15
 
         }
 
@@ -81,7 +81,7 @@ Item{
             left: batteryGauge.right
             leftMargin: 70
             top: parent.top
-            topMargin: -280
+            topMargin: -320
         }
     }
     Text {
@@ -167,10 +167,10 @@ Item{
     Image {
         id: batteryLow
         x:270
-        visible: batterypage.socValue < 21
+        visible: batterypage.socValue < 26
        anchors{
            bottom: parent.bottom
-           bottomMargin: 50
+           bottomMargin: 40
        }
         width: parent.width/42
         fillMode: Image.PreserveAspectFit

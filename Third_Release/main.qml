@@ -10,9 +10,11 @@ import QtQuick.Layouts 1.15
 Window {
     id:mainWindow
     width: 1920
-    height: 585
+    height: 512
     visible: true
     color: "black"
+    property int xDiff: 0
+    property int yDiff: 40
 
     property bool turnRight: true    //should be adjusted to Defualt 0 ->false
     property bool turnLeft: true
@@ -29,7 +31,7 @@ Window {
     property int speedValue: 160
     property int heatValue:5
     property string smode: "neutral"
-    property int socValue: 27     // from 0 to 100
+    property int socValue: 24     // from 0 to 100
     property int sohValue: 99    // from 0 to 100
     property int sotValue: 70     // from 0 to 100
 

@@ -9,9 +9,7 @@ Item{
     id: naviFrame
     visible: true
 
-    width: 900// parent.width-400
-    height:500 // parent.height-200
-    anchors.centerIn: parent
+    anchors.fill: parent
 
     property int speedValue: mainWindow.speedValue
     property int heatValue: mainWindow.heatValue
@@ -313,8 +311,8 @@ Item{
     }
 
     Rectangle{
-        width:350
-        height: 350
+        width:250
+        height: 250
        // color: "#021240"
         gradient: Gradient {
                  GradientStop { position: 1.0; color: "black" }  // "lightsteelblue"
@@ -324,8 +322,8 @@ Item{
         anchors.centerIn: naviGear
     }
     Rectangle{
-        width:350
-        height: 350
+        width:255
+        height: 255
        // color: "#021240"
         gradient: Gradient {
                  GradientStop { position: 1.0; color: "black" }  // "lightsteelblue"
@@ -334,9 +332,9 @@ Item{
         radius: 200
         anchors{
             top: naviBattery.top
-            topMargin: 70
+            topMargin: 90
             left: naviBattery.left
-            leftMargin: 70
+            leftMargin: 90
         }
     }
 
@@ -359,17 +357,17 @@ Item{
 
     Speed_Gauge{
         id:naviGear
-      scale: 0.35
-      x:-330
-      y:-70
+      scale: 0.28
+      x:-360
+      y:-130
       speedValue:naviFrame.speedValue
       smode:naviFrame.smode
     }
     BatteryGauge{
         id:naviBattery
-       scale : 0.35
-        x:1500
-        y:185
+       scale : 0.28
+        x:1550
+        y:155
         socValue: naviFrame.socValue
         sohValue: naviFrame.sohValue
         sotValue: naviFrame.sotValue

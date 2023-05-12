@@ -99,7 +99,7 @@ Item {
         if(socValue <= 20){
             socIcon.source="qrc:/img/low-battery-level.png"
             socIcon.scale=3.5
-        } else if(socValue <= 30){
+        } else if(socValue <= 25){
             socIcon.source="qrc:/img/lowbatterylevel.png"
            socIcon.scale=3.5
         } else if(socValue <= 80) {

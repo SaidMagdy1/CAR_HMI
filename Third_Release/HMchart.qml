@@ -36,20 +36,6 @@ Item {
               //chartCanvas.width = chartCanvas.width + 10 ;
            }
 
-
-//             if(mainWindow.batState){                       // testing thr chart
-
-//                batteryChart.lineY = batteryChart.lineY - step/10;
-//                  if(batteryChart.lineY <= (parent.height -max) ){
-//                      batteryChart.lineY =parent.height -max;
-//                  }
-//              }
-//              else{
-//                batteryChart.lineY = batteryChart.lineY + step/10;
-//                 if(batteryChart.lineY >= (parent.height-min ) ){
-//                     batteryChart.lineY =parent.height-min;
-//                 }
-//              }
        }
    }
  Rectangle{
@@ -88,6 +74,8 @@ Item {
         }
      function clear(){
          var ctx=getContext('2d');
+         batteryChart.lineX=0;
+         chartCanvas.x=0;
          ctx.reset();
          chartCanvas.requestPaint();
        }
