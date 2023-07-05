@@ -8,7 +8,7 @@ Item
     height: 1000
     visible: true
     property int speedValue: 150
-    property int heatValue:10
+    property int heatValue:50
     property string smode: "reverse"
     property real heatend: 90
     property bool speedVisiblity: true
@@ -191,7 +191,7 @@ Item
             currentv: speed.heatValue
             anchors.centerIn: parent
             start: 45
-            end : heatend
+            end : (45+(45*speed.heatValue/100))<= 90 ? (45+(45*speed.heatValue/100)) : 90
             height: (dash.height)-315
             width: height
             linesize: 10

@@ -7,6 +7,9 @@ Item{
     property bool lights: mainWindow.lights
     property bool chargingState :mainWindow.chargingState
 
+    property bool mode1: mainWindow.mode1      // to switch modes
+    property bool mode2: mainWindow.mode2
+
     property int speedValue: mainWindow.speedValue
 
     property int socValue: mainWindow.socValue     // from 0 to 100
@@ -25,6 +28,25 @@ Item{
         anchors.fill: parent
         source: "qrc:/img/bg.jpg"
     }
+
+
+    onMode1Changed: {
+        if(mode1)
+            carMode="  s p o r t"
+        else if(mode2)
+            carMode="  e  c h o"
+        else
+            carMode= "n o r m a l"
+    }
+    onMode2Changed: {
+        if(mode1)
+            carMode="  s p o r t"
+        else if(mode2)
+            carMode="  e  c h o"
+        else
+            carMode= "n o r m a l"
+    }
+
 
 
     BatteryGauge{
@@ -269,7 +291,7 @@ Item{
      max:100
      min:0
      value: batterypage.socValue
-     rate: 10
+     rate: 10          //10 base  so sample every rate/10 per 500ms
       //lineColor: red
    }
   Rectangle{

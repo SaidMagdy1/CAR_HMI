@@ -8,6 +8,7 @@ id: dbPage
 x:200
 property bool k1: f1? true : false
 property bool k2: f2? true : false
+property bool k3: f3? true : false
 property bool k4: f4? true : false
 property bool k5: f5? true : false
 property bool k6: f6? true : false
@@ -18,16 +19,16 @@ property int g2: 0
 property int g3: 0
 property int c: 0
 property int f1: batterycharge<10? 1:0
-property int f2: 30<batterytemp<15? 0:1
-property int f3: 0
-property int f4: generalfault? 1:0
-property int f5: electricalfault? 1:0
+property int f2: batterytemp<15? 1:0
+property int f3: batterytemp>30? 1:0
+property int f4: dimingcarlights? 1:0
+property int f5: carfusesblow? 1:0
 property int f6: limitedpower? 1:0
 property int f7: settingsfault? 1:0
 property int f8: nupdate? true:false
 property int flags: f4+f5+f6+f7
-property int battnum: f1+f2
-property bool settingsfault: false
+property int battnum: f1+f2+f3
+property bool settingsfault: commproblem? true:false
 property bool nupdate: false
 property bool notifiactionSE: false
 property bool notifiactionB: false
@@ -36,7 +37,10 @@ property bool generalfault: false
 property bool limitedpower: false
 property int batterytemp: 25
 property int batterycharge: 50
-property bool electricalfault: false
+//property bool electricalfault: Dimingcarlights? true:false || carfusesblow? true:false
+property bool dimingcarlights: false
+property bool carfusesblow: false
+property bool commproblem: false
 
  FontLoader { id:aldo ; source: "AldotheApache.ttf" }
 // Image {
@@ -45,100 +49,128 @@ property bool electricalfault: false
 //     x:(parent.width/2)-(info.width/2)
 //     y:50
 // }
- //---------test buttons ---------
- Button{
-     x:-80
-     y:30
-     height: 50
-     width: 50
-     text: "btch"
-MouseArea{
-    anchors.fill: parent
-    onClicked: {
-        f1=1
-    }
- }
- }
- Button{
-     x:-80
-     y:80
-     height: 50
-     width: 50
-     text: "bttemp"
-MouseArea{
-    anchors.fill: parent
-    onClicked: {
-        f2=1
-    }
- }
- }
- Button{
-     x:-80
-     y:130
-     height: 50
-     width: 50
-     text: "gf"
-MouseArea{
-    anchors.fill: parent
-    onClicked: {
-        f4=1
-    }
- }
- }
- Button{
-     x:-80
-     y:180
-     height: 50
-     width: 50
-     text: "ef"
-MouseArea{
-    anchors.fill: parent
-    onClicked: {
-        f5=1
-    }
- }
- }
- Button{
-     x:-80
-     y:230
-     height: 50
-     width: 50
-     text: "lp"
-MouseArea{
-    anchors.fill: parent
-    onClicked: {
-        f6=1
-    }
- }
- }
- Button{
-     x:-80
-     y:280
-     height: 50
-     width: 50
-     text: "sett"
-MouseArea{
-    anchors.fill: parent
-    onClicked: {
-        f7=1
-    }
- }
- }
- Button{
-     x:-80
-     y:310
-     height: 50
-     width: 50
-     text: "up"
-MouseArea{
-    anchors.fill: parent
-    onClicked: {
-        f8=1
-    }
- }
- }
 
 
+ //-------------------------------------------------------test buttons -----------------------------------
+// Button{
+//     x:-80
+//     y:30
+//     height: 50
+//     width: 50
+//     text: "btch"
+//MouseArea{
+//    anchors.fill: parent
+//    onClicked: {
+//        f1=1
+//    }
+// }
+// }
+// Button{
+//     x:-80
+//     y:80
+//     height: 50
+//     width: 50
+//     text: "<15"
+//MouseArea{
+//    anchors.fill: parent
+//    onClicked: {
+//        batterytemp=10
+//        //f2=1
+//    }
+// }
+// }
+// Button{
+//     x:-130
+//     y:80
+//     height: 50
+//     width: 50
+//     text: ">30"
+//MouseArea{
+//    anchors.fill: parent
+//    onClicked: {
+//        batterytemp=40;
+//        //f2=1
+//    }
+// }
+// }
+// Button{
+//     x:-80
+//     y:130
+//     height: 50
+//     width: 50
+//     text: "lights"
+//MouseArea{
+//    anchors.fill: parent
+//    onClicked: {
+//        dimingcarlights=true
+//    }
+// }
+// }
+// Button{
+//     x:-80
+//     y:180
+//     height: 50
+//     width: 50
+//     text: "fuses"
+//MouseArea{
+//    anchors.fill: parent
+//    onClicked: {
+//        carfusesblow=true
+//    }
+// }
+// }
+// Button{
+//     x:-80
+//     y:230
+//     height: 50
+//     width: 50
+//     text: "lp"
+//MouseArea{
+//    anchors.fill: parent
+//    onClicked: {
+//        f6=1
+//    }
+// }
+// }
+// Button{
+//     x:-80
+//     y:280
+//     height: 50
+//     width: 50
+//     text: "sett"
+//MouseArea{
+//    anchors.fill: parent
+//    onClicked: {
+//        commproblem=true
+//    }
+// }
+// }
+// Button{
+//     x:-80
+//     y:310
+//     height: 50
+//     width: 50
+//     text: "up"
+//MouseArea{
+//    anchors.fill: parent
+//    onClicked: {
+//        nupdate=true
+//    }
+// }
+// }
+
+ //-----------------------------------------------------------------------------------------------
+
+
+// onBatterytempChanged: {
+//     if(15<batterytemp<30){
+//         f2==0;
+//     } else if (batterytemp<15) {
+//         f2==1;
+//     } else if(batterytemp>30){
+//         f2==1;
+//     }
+// }
 //onF1Changed: {
 //    if(f1==1){
 //        if(c==1){
@@ -173,22 +205,33 @@ MouseArea{
      running: k1
      repeat: false
      onTriggered:
-     { if(battnum==1){
+     { c=1
+         if(battnum==1){
          batttimeDet.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
          battdateDet.text = Qt.formatDateTime(new Date(), "dd MMMM")
-         batteventDet.text="the battery charge percentage is lower than"
+         batteventDet.text="the battery charge percentage is lower th.."
          battNoDet.text="1"
          battdot.opacity=1
         background1.height=50
-             c=1
-         } else if(battnum==2){
+
+            // battmoredetails2.opacity=0
+            // battmoredetails1.opacity=1
+             battmoredetails1.text="the battery charge percentage is lower than the specific
+efficient value
+you need to shut the car down and recharge it"
+         } else if(battnum==2 || battnum==3){
              batttimeDet1.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              battdateDet1.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             batteventDet1.text="the battery charge percentage is lower than"
+             batteventDet1.text="the battery charge percentage is lower th.."
              battNoDet1.text="2"
              battdot.opacity=1
               background1.height=80
-             c=2
+
+             // battmoredetails2.opacity=1
+             battmoredetails2.text="the battery charge percentage is lower than the specific
+efficient value
+you need to shut the car down and recharge it"
+            // battmoredetails1.opacity=0
          }
      }
  }
@@ -199,22 +242,67 @@ MouseArea{
      running: k2
      repeat: false
      onTriggered:
-     { if(battnum==1){
+     { c=c+2
+         if(battnum==1){
          batttimeDet.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
          battdateDet.text = Qt.formatDateTime(new Date(), "dd MMMM")
-         batteventDet.text="there is a problem in the battery temperatur"
+         batteventDet.text="the battery temperature is lower than the.."
          battNoDet.text="1"
              battdot.opacity=1
               background1.height=50
-         } else if(battnum==2){
+             battmoredetails1.text="the battery temperature is lower than the specific allowed
+efficient limit and this will affect on car performance!
+PLEASE check the nearest dealer to fix the problem"
+            // battmoredetails2.opacity=0
+
+
+         } else if(battnum==2 || battnum==3){
              batttimeDet1.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              battdateDet1.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             batteventDet1.text="there is a problem in the battery temperatur"
+             batteventDet1.text="the battery temperature is lower than the.."
              battNoDet1.text="2"
              battdot.opacity=1
               background1.height=80
-         }
+             battmoredetails2.text="the battery temperature is lower than the specific allowed
+efficient limit and,this will affect on car performance!
+PLEASE check the nearest dealer to fix the problem"
+             //battmoredetails1.opacity=0
+
      }
+ }
+ }
+ Timer
+ {
+     id : timer3
+     interval: 1000 // 1 second
+     running: k3
+     repeat: false
+     onTriggered:
+     { c=c+4
+         if(battnum==1){
+         batttimeDet.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
+         battdateDet.text = Qt.formatDateTime(new Date(), "dd MMMM")
+         batteventDet.text="the battery temperature is higher than the.."
+         battNoDet.text="1"
+             battdot.opacity=1
+              background1.height=50
+             battmoredetails1.text="the battery temperature is heigher than the specific allowed
+efficient limit and this will affect on car performance!
+PLEASE shut down the car to rest the battery"
+            // battmoredetails2.opacity=0
+         } else if(battnum==2 || battnum==3){
+             batttimeDet1.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
+             battdateDet1.text = Qt.formatDateTime(new Date(), "dd MMMM")
+             batteventDet1.text="the battery temperature is higher than the.."
+             battNoDet1.text="2"
+             battdot.opacity=1
+              background1.height=80
+             battmoredetails2.text="the battery temperature is heigher than the specifc allowed
+efficient limit and this will affect on car performance!
+PLEASE shut down the car to rest the battery"
+            // battmoredetails1.opacity=0
+     }
+ }
  }
  //-----------settings faults-----------
  Timer
@@ -227,31 +315,47 @@ MouseArea{
      { if(flags==1){
          setttimeDet.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
          settdateDet.text = Qt.formatDateTime(new Date(), "dd MMMM")
-         setteventDet.text="there is a genral fault has occured"
+         setteventDet.text="car lights start to dim due to electrical f.."
          settNoDet.text="1"
          setdot.opacity=1
          background.height=50
+         settmoredetails1.text="car lights start to dim due to electrical fault as the
+elecreical system is malfunctioning due to low system
+voltage, loose wires or dying battery
+check the nearset dealer to check the car"
          } else if(flags==2){
              setttimeDet1.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet1.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet1.text="there is a genral fault has occured"
+             setteventDet1.text="car lights start to dim due to electrical f.."
              settNoDet1.text="2"
              setdot.opacity=1
              background.height=80
+             settmoredetails2.text="car lights start to dim due to electrical fault as the
+    elecreical system is malfunctioning due to low system
+    voltage, loose wires or dying battery
+    check the nearset dealer to check the car"
          }else if(flags==3){
              setttimeDet2.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet2.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet2.text="there is a genral fault has occured"
+             setteventDet2.text="car lights start to dim due to electrical f.."
              settNoDet2.text="3"
              setdot.opacity=1
              background.height=100
+             settmoredetails3.text="car lights start to dim due to electrical fault as the
+    elecreical system is malfunctioning due to low system
+    voltage, loose wires or dying battery
+    check the nearset dealer to check the car"
          } else if(flags==4){
              setttimeDet3.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet3.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet3.text="there is a genral fault has occured"
+             setteventDet3.text="car lights start to dim due to electrical f.."
              settNoDet3.text="4"
              setdot.opacity=1
              background.height=130
+             settmoredetails3.text="car lights start to dim due to electrical fault as the
+    elecreical system is malfunctioning due to low system
+    voltage, loose wires or dying battery
+    check the nearset dealer to check the car"
          }
      }
  }
@@ -265,31 +369,47 @@ MouseArea{
      { if(flags==1){
          setttimeDet.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
          settdateDet.text = Qt.formatDateTime(new Date(), "dd MMMM")
-         setteventDet.text="there's an electrical fault in your system"
+         setteventDet.text="car fuses blow out due to electrical fault"
          settNoDet.text="1"
          setdot.opacity=1
          background.height=50
+             settmoredetails1.text="car fuses blow out due to electrical fault as the system
+of car is malfunctioning due to a short circuit, the car
+needs to be examined well
+check the nearset dealer to repair the fault"
          } else if(flags==2){
              setttimeDet1.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet1.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet1.text="there's an electrical fault in your system"
+             setteventDet1.text="car fuses blow out due to electrical fault"
              settNoDet1.text="2"
              setdot.opacity=1
              background.height=80
+             settmoredetails2.text="car fuses blow out due to electrical fault as the system
+of car is malfunctioning due to a short circuit, the car
+needs to be examined well
+check the nearset dealer to repair the fault"
          }else if(flags==3){
              setttimeDet2.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet2.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet2.text="there's an electrical fault in your system"
+             setteventDet2.text="car fuses blow out due to electrical fault"
              settNoDet2.text="3"
              setdot.opacity=1
              background.height=100
+             settmoredetails3.text="car fuses blow out due to electrical fault as the system
+of car is malfunctioning due to a short circuit, the car
+needs to be examined well
+check the nearset dealer to repair the fault"
          } else if(flags==4){
              setttimeDet3.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet3.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet3.text="there's an electrical fault in your system"
+             setteventDet3.text="car fuses blow out due to electrical fault"
              settNoDet3.text="4"
              setdot.opacity=1
              background.height=130
+             settmoredetails4.text="car fuses blow out due to electrical fault as the system
+of car is malfunctioning due to a short circuit, the car
+needs to be examined well
+check the nearset dealer to repair the fault"
          }
      }
  }
@@ -303,31 +423,43 @@ MouseArea{
      { if(flags==1){
          setttimeDet.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
          settdateDet.text = Qt.formatDateTime(new Date(), "dd MMMM")
-         setteventDet.text="the car is getting into limited power mode"
+         setteventDet.text="car is getting into limited power mode"
          settNoDet.text="1"
          setdot.opacity=1
          background.height=50
+             settmoredetails1.text="a deep issue in car electrical system occuredit may be due
+to over voltage,short circuit or battery temperature
+stop your car immediately and check it"
          } else if(flags==2){
              setttimeDet1.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet1.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet1.text="the car is getting into limited power mode"
+             setteventDet1.text="car is getting into limited power mode"
              settNoDet1.text="2"
              setdot.opacity=1
              background.height=80
+             settmoredetails2.text="a deep issue in car electrical system occured it may be due
+to over voltage,short circuit or battery temperature
+stop your car immediately and check it"
          }else if(flags==3){
              setttimeDet2.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet2.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet2.text="the car is getting into limited power mode"
+             setteventDet2.text="car is getting into limited power mode"
              settNoDet2.text="3"
              setdot.opacity=1
              background.height=100
+             settmoredetails3.text="a deep issue in car electrical system occured it may be due
+to over voltage,short circuit or battery temperature
+stop your car immediately and check it"
          } else if(flags==4){
              setttimeDet3.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet3.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet3.text="the car is getting into limited power mode"
+             setteventDet3.text="car is getting into limited power mode"
              settNoDet3.text="4"
              setdot.opacity=1
              background.height=130
+             settmoredetails4.text="a deep issue in car electrical system occured it may be due
+to over voltage,short circuit or battery temperature
+stop your car immediately and check it"
          }
      }
  }
@@ -341,31 +473,39 @@ MouseArea{
      { if(flags==1){
          setttimeDet.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
          settdateDet.text = Qt.formatDateTime(new Date(), "dd MMMM")
-         setteventDet.text="there is a problem has occured in settings"
+         setteventDet.text="the car communication system is malfunction"
          settNoDet.text="1"
          setdot.opacity=1
          background.height=50
+        settmoredetails1.text="the car communication system is malfunctioning due
+to a fault in car electronic system"
          } else if(flags==2){
              setttimeDet1.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet1.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet1.text="there is a problem has occured in settings"
+             setteventDet1.text="the car communication system is malfunct.."
              settNoDet1.text="2"
              setdot.opacity=1
              background.height=80
+             settmoredetails2.text="the car communication system is malfunctioning due to a
+fault occured in car electronics system"
          }else if(flags==3){
              setttimeDet2.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet2.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet2.text="there is a problem has occured in settings"
+             setteventDet2.text="the car communication system is malfunct.."
              settNoDet2.text="3"
              setdot.opacity=1
              background.height=100
+             settmoredetails3.text="the car communication system is malfunctioning due to a
+fault occured in car electronics system"
          } else if(flags==4){
              setttimeDet3.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
              settdateDet3.text = Qt.formatDateTime(new Date(), "dd MMMM")
-             setteventDet3.text="there is a problem has occured in settings"
+             setteventDet3.text="the car communication system is malfunct.."
              settNoDet3.text="4"
              setdot.opacity=1
              background.height=130
+             settmoredetails4.text="the car communication system is malfunctioning due to a
+fault occured in car electronics system"
          }
      }
  }
@@ -384,6 +524,9 @@ MouseArea{
          upNoDet.text="1"
          updatedot.opacity=1
          background2.height=50
+         updatemoredetails.text="there is a new update with new features has uploaded to
+ your system , upgrade to enjoy the new features"
+
 
      }
  }
@@ -404,7 +547,7 @@ MouseArea{
          anchors.fill: parent
          onClicked: {
              infodetails.start();
-             right1.source="qrc:/img/arrow-down-sign-to-navigate.png"
+             right1.source="qrc:/img/arrow-down-sign.png"
          }
      }
  }
@@ -443,11 +586,12 @@ MouseArea{
              }
              g2=0
              g3=0
-             right2.source="qrc:/img/arrow-down-sign-to-navigate.png"
+             right2.source="qrc:/img/arrow-down-sign.png"
              pagesup.opacity=0.5
              right3.source="qrc:/img/next.png"
              right4.source="qrc:/img/next.png"
              setdot.opacity=0
+
          }
      }
  }
@@ -484,11 +628,13 @@ MouseArea{
              }
              g3==0
              g1==0
-             right3.source="qrc:/img/arrow-down-sign-to-navigate.png"
+             right3.source="qrc:/img/arrow-down-sign.png"
              pagesup1.opacity=0.5
              right2.source="qrc:/img/next.png"
              right4.source="qrc:/img/next.png"
              battdot.opacity=0
+
+
            }
      }
  }
@@ -531,8 +677,9 @@ MouseArea{
              right3.source="qrc:/img/next.png"
              right2.source="qrc:/img/next.png"
              updatedot.opacity=0
-         }
+
      }
+ }
  }
  Image {
      id: right4
@@ -579,9 +726,7 @@ MouseArea{
              right2.source="qrc:/img/next.png"
              right3.source="qrc:/img/next.png"
              right4.source="qrc:/img/next.png"
-             detailsOFF.start()
-             detailsOFF1.start()
-             detailsOFF2.start()
+
          }
 
      }
@@ -611,9 +756,7 @@ MouseArea{
              right2.source="qrc:/img/next.png"
              right3.source="qrc:/img/next.png"
              right4.source="qrc:/img/next.png"
-             detailsOFF.start()
-             detailsOFF1.start()
-             detailsOFF2.start()
+
          }
 
      }
@@ -643,9 +786,7 @@ MouseArea{
              right2.source="qrc:/img/next.png"
              right3.source="qrc:/img/next.png"
              right4.source="qrc:/img/next.png"
-             detailsOFF.start()
-             detailsOFF1.start()
-             detailsOFF2.start()
+
          }
 
      }
@@ -1285,7 +1426,10 @@ Rectangle{
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    detailsON1.start()
+                    battdetailsON.start()
+                   // battdetailsON1.start()
+                    battmoredetails1.opacity=1
+                    battmoredetails2.opacity=0
                 }
             }
 
@@ -1347,7 +1491,10 @@ Rectangle{
          MouseArea{
              anchors.fill: parent
              onClicked: {
-                 detailsON1.start()
+                // battdetailsON.start()
+                 battdetailsON1.start()
+                 battmoredetails2.opacity=1
+                 battmoredetails1.opacity=0
              }
          }
      }
@@ -1409,7 +1556,12 @@ Rectangle{
          MouseArea{
              anchors.fill: parent
              onClicked: {
-                 detailsON.start()
+              settdetailsON1.start()
+              settmoredetails1.opacity=1
+                 settmoredetails2.opacity=0
+                 settmoredetails3.opacity=0
+                 settmoredetails4.opacity=0
+
              }
          }
 
@@ -1470,7 +1622,11 @@ Rectangle{
          MouseArea{
              anchors.fill: parent
              onClicked: {
-                 detailsON.start()
+                 settdetailsON2.start()
+                 settmoredetails1.opacity=0
+                    settmoredetails2.opacity=1
+                    settmoredetails3.opacity=0
+                    settmoredetails4.opacity=0
              }
          }
 
@@ -1531,7 +1687,11 @@ Rectangle{
          MouseArea{
              anchors.fill: parent
              onClicked: {
-                 detailsON.start()
+                 settdetailsON3.start()
+                 settmoredetails1.opacity=0
+                    settmoredetails2.opacity=0
+                    settmoredetails3.opacity=1
+                    settmoredetails4.opacity=0
              }
          }
 
@@ -1592,7 +1752,11 @@ Rectangle{
          MouseArea{
              anchors.fill: parent
              onClicked: {
-                 detailsON.start()
+                 settdetailsON4.start()
+                 settmoredetails1.opacity=0
+                    settmoredetails2.opacity=0
+                    settmoredetails3.opacity=0
+                    settmoredetails4.opacity=1
              }
          }
 
@@ -1655,7 +1819,8 @@ Rectangle{
          MouseArea{
              anchors.fill: parent
              onClicked: {
-                 detailsON2.start()
+                updatedetailsON.start()
+                updatemoredetails.opacity=1
              }
          }
 
@@ -1664,29 +1829,8 @@ Rectangle{
 
 //-----------------more details layout---------------------
      Rectangle{
-         id:fdetails
-         width: 400
-         height: 0
-         color: "#06c7f2"
-         opacity: 0.5
-         anchors{
-             top: background.top
-             topMargin: 0
-             left: background.right
-             leftMargin: 1
-         }
-
-         MouseArea{
-             anchors.fill: parent
-             onClicked: {
-                 detailsOFF.start()
-             }
-         }
-
-     }
-     Rectangle{
-         id:fdetails1
-         width: 400
+         id:fdetailsbatt
+         width: 405
          height: 0
          color: "#06c7f2"
          opacity: 0.5
@@ -1700,14 +1844,46 @@ Rectangle{
          MouseArea{
              anchors.fill: parent
              onClicked: {
-                 detailsOFF1.start()
+                 battdetailsOFF.start()
+                 battdetailsOFF1.start()
+                 battmoredetails1.opacity=0
+                 battmoredetails2.opacity=0
              }
          }
 
      }
      Rectangle{
-         id:fdetails2
-         width: 400
+         id:fdetails1sett
+         width: 405
+         height: 0
+         color: "#06c7f2"
+         opacity: 0.5
+         anchors{
+             top: background.top
+             topMargin: 0
+             left: background.right
+             leftMargin: 1
+         }
+
+         MouseArea{
+             anchors.fill: parent
+             onClicked: {
+                 settdetailsOFF1.start()
+                 settdetailsOFF2.start()
+                 settdetailsOFF3.start()
+                 settdetailsOFF4.start()
+                 settmoredetails1.opacity=0
+                 settmoredetails2.opacity=0
+                 settmoredetails3.opacity=0
+                 settmoredetails4.opacity=0
+
+             }
+         }
+
+     }
+     Rectangle{
+         id:fdetails2up
+         width: 405
          height: 0
          color: "#06c7f2"
          opacity: 0.5
@@ -1721,135 +1897,301 @@ Rectangle{
          MouseArea{
              anchors.fill: parent
              onClicked: {
-                 detailsOFF2.start()
+                 updatedetailsOFF.start()
+                 updatemoredetails.opacity=0
              }
          }
 
      }
-
-//     Text {
-//         id: battmoredetails1
-//         text: qsTr("")
-//         font.family: aldo.name
-//         font.pixelSize: 16
-//         color: "white"
-//         opacity: 0
-//         anchors{
-//             top:fdetails.top
-//             topMargin: 3
-//             left:fdetails.left
-//             leftMargin: 2
-//         }
-//     }
-//     Text {
-//         id: battmoredetails2
-//         text: qsTr("")
-//         font.family: aldo.name
-//         font.pixelSize: 16
-//         color: "white"
-//         opacity: 0
-//         anchors{
-//             top:fdetails.top
-//             topMargin: 3
-//             left:fdetails.left
-//             leftMargin: 2
-//         }
-//     }
-
+//---------batterymore----------
+     Text {
+         id: battmoredetails1
+         text: qsTr("")
+         font.family: aldo.name
+         font.pixelSize: 16
+         color: "white"
+         opacity: 0
+         anchors{
+             top:fdetailsbatt.top
+             topMargin: 3
+             left:fdetailsbatt.left
+             leftMargin: 2
+//             bottom: fdetails.bottom
+//             bottomMargin: 2
+         }
+     }
+     Text {
+         id: battmoredetails2
+         text: qsTr("")
+         font.family: aldo.name
+         font.pixelSize: 16
+         color: "white"
+         opacity: 0
+         anchors{
+             top:fdetailsbatt.top
+             topMargin: 3
+             left:fdetailsbatt.left
+             leftMargin: 2
+         }
+     }
+//------------settingsmore------------
+     Text {
+         id: settmoredetails1
+         text: qsTr("")
+         font.family: aldo.name
+         font.pixelSize: 16
+         color: "white"
+         opacity: 0
+         anchors{
+             top:fdetails1sett.top
+             topMargin: 3
+             left:fdetails1sett.left
+             leftMargin: 2
+         }
+     }
+     Text {
+         id: settmoredetails2
+         text: qsTr("")
+         font.family: aldo.name
+         font.pixelSize: 16
+         color: "white"
+         opacity: 0
+         anchors{
+             top:fdetails1sett.top
+             topMargin: 3
+             left:fdetails1sett.left
+             leftMargin: 2
+         }
+     }
+     Text {
+         id: settmoredetails3
+         text: qsTr("")
+         font.family: aldo.name
+         font.pixelSize: 16
+         color: "white"
+         opacity: 0
+         anchors{
+             top:fdetails1sett.top
+             topMargin: 3
+             left:fdetails1sett.left
+             leftMargin: 2
+         }
+     }
+     Text {
+         id: settmoredetails4
+         text: qsTr("")
+         font.family: aldo.name
+         font.pixelSize: 16
+         color: "white"
+         opacity: 0
+         anchors{
+             top:fdetails1sett.top
+             topMargin: 3
+             left:fdetails1sett.left
+             leftMargin: 2
+         }
+     }
+ //-------------updates--------------
+     Text {
+         id: updatemoredetails
+         text: qsTr("")
+         font.family: aldo.name
+         font.pixelSize: 16
+         color: "white"
+         opacity: 0
+         anchors{
+             top:fdetails2up.top
+             topMargin: 3
+             left:fdetails2up.left
+             leftMargin: 2
+         }
+     }
+//------------more details anim-------//
+//-----------battmoredetails-------//
      ParallelAnimation{
-         id:detailsON
+         id:battdetailsON
 
          NumberAnimation {
-             target: fdetails
+             target: fdetailsbatt
              property: "height"
              from:0
-             to:100
+             to: battmoredetails1.height+3
              duration: 200
              easing.type: Easing.InOutQuad
          }
-
      }
      ParallelAnimation{
-         id:detailsOFF
+         id:battdetailsOFF
 
          NumberAnimation {
-             target: fdetails
+             target: fdetailsbatt
              property: "height"
-             from:fdetails.height
-             to:0
-             duration: 200
+             from:battmoredetails1.height+3
+             to: 0
+             duration: 50
              easing.type: Easing.InOutQuad
          }
      }
-
      ParallelAnimation{
-         id:detailsON1
+         id:battdetailsON1
 
          NumberAnimation {
-             target: fdetails1
+             target: fdetailsbatt
              property: "height"
              from:0
-             to:100
+             to: battmoredetails2.height+3
              duration: 200
              easing.type: Easing.InOutQuad
          }
-
      }
      ParallelAnimation{
-         id:detailsOFF1
+         id:battdetailsOFF1
 
          NumberAnimation {
-             target: fdetails1
+             target: fdetailsbatt
              property: "height"
-             from:fdetails.height
-             to:0
-             duration: 200
+             from:battmoredetails2.height+3
+             to: 0
+             duration: 50
              easing.type: Easing.InOutQuad
          }
      }
-
+//-------------settingmoreanim--------
      ParallelAnimation{
-         id:detailsON2
+         id:settdetailsON1
 
          NumberAnimation {
-             target: fdetails2
+             target: fdetails1sett
              property: "height"
              from:0
-             to:100
+             to: settmoredetails1.height+3
              duration: 200
              easing.type: Easing.InOutQuad
          }
-
      }
      ParallelAnimation{
-         id:detailsOFF2
+         id:settdetailsOFF1
 
          NumberAnimation {
-             target: fdetails2
+             target: fdetails1sett
              property: "height"
-             from:fdetails.height
-             to:0
+             from:settmoredetails1.height+3
+             to: 0
+             duration: 50
+             easing.type: Easing.InOutQuad
+         }
+     }
+     ParallelAnimation{
+         id:settdetailsON2
+
+         NumberAnimation {
+             target: fdetails1sett
+             property: "height"
+             from:0
+             to: settmoredetails2.height+3
              duration: 200
              easing.type: Easing.InOutQuad
          }
      }
-//---------------------------------------------------------//
+     ParallelAnimation{
+         id:settdetailsOFF2
 
-//----------------selection table animation -----------------------
+         NumberAnimation {
+             target: fdetails1sett
+             property: "height"
+             from:settmoredetails2.height+3
+             to: 0
+             duration: 50
+             easing.type: Easing.InOutQuad
+         }
+     }
+     ParallelAnimation{
+         id:settdetailsON3
 
-    ParallelAnimation{
-        id:infodetails
+         NumberAnimation {
+             target: fdetails1sett
+             property: "height"
+             from:0
+             to: settmoredetails3.height+3
+             duration: 200
+             easing.type: Easing.InOutQuad
+         }
+     }
+     ParallelAnimation{
+         id:settdetailsOFF3
 
-        NumberAnimation {
-            target: selection
-            property: "y"
-            from:-1000
-            to:70
-            duration: 300
-            easing.type: Easing.InOutQuad
-        }
-    }
+         NumberAnimation {
+             target: fdetails1sett
+             property: "height"
+             from:settmoredetails3.height+3
+             to: 0
+             duration: 50
+             easing.type: Easing.InOutQuad
+         }
+     }
+     ParallelAnimation{
+         id:settdetailsON4
 
+         NumberAnimation {
+             target: fdetails1sett
+             property: "height"
+             from:0
+             to: settmoredetails4.height+3
+             duration: 200
+             easing.type: Easing.InOutQuad
+         }
+     }
+     ParallelAnimation{
+         id:settdetailsOFF4
+
+         NumberAnimation {
+             target: fdetails1sett
+             property: "height"
+             from:settmoredetails4.height+3
+             to: 0
+             duration: 50
+             easing.type: Easing.InOutQuad
+         }
+     }
+ //----------------updates more--------------
+
+     ParallelAnimation{
+         id:updatedetailsON
+
+         NumberAnimation {
+             target: fdetails2up
+             property: "height"
+             from:0
+             to: updatemoredetails.height+3
+             duration: 200
+             easing.type: Easing.InOutQuad
+         }
+     }
+     ParallelAnimation{
+         id:updatedetailsOFF
+
+         NumberAnimation {
+             target: fdetails2up
+             property: "height"
+             from:updatemoredetails.height+3
+             to: 0
+             duration: 50
+             easing.type: Easing.InOutQuad
+         }
+     }
+//-------------info animation-------------
+     ParallelAnimation{
+         id:infodetails
+
+         NumberAnimation {
+             target: selection
+             property: "y"
+             from:-1000
+             to:70
+             duration: 300
+             easing.type: Easing.InOutQuad
+         }
+     }
 //-----------------settings table animation-----------------
     ParallelAnimation{
         id:settdetails

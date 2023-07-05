@@ -7,10 +7,73 @@ Item {
     id: header
     anchors.fill: parent
 
-  property int pages: 0
+
+  property bool pageRight: mainWindow.pageRight      // to travel between the page
+  property bool pageLeft: mainWindow.pageLeft
+
+  property int pages: 0      //indcation to the displayed page
   property int w: 0
 
 
+
+
+    onPageRightChanged: {
+        if(pageRight && !pageLeft){
+
+            if( pages === 0){
+                mainLoader.source = "NavigationPage.qml" ;
+                            pages=2 ;
+                            navigationiconn.start();
+                console.log("if2");
+            }
+            else if(pages === 2){
+                mainLoader.source= "CarPage.qml"
+                            pages=1
+                            cariconn.start();
+
+            }
+            else if( pages === 1){
+                mainLoader.source= "BatteryPage.qml"
+                            pages=3
+                            batteryiconn.start();
+
+            }
+            else if (pages === 3){
+                mainLoader.source= "MainPage.qml"
+                           pages=0
+                           mainPageiconn.start();
+
+            }
+        }
+    }
+
+
+    onPageLeftChanged: {
+        if(pageLeft && !pageRight){
+            if(pages === 0){
+                mainLoader.source= "BatteryPage.qml"
+                            pages=3
+                            batteryiconn.start();
+            }
+            else if(pages === 2){
+                mainLoader.source= "MainPage.qml"
+                           pages=0
+                           mainPageiconn.start();
+
+            }
+            else if( pages === 1){
+                mainLoader.source= "NavigationPage.qml"
+                            pages=2
+                            navigationiconn.start();
+
+            }
+            else if (pages === 3){
+                mainLoader.source= "CarPage.qml"
+                            pages=1
+                            cariconn.start();
+            }
+        }
+    }
 
 
 
@@ -50,8 +113,7 @@ Image {
     anchors{
      top: parent.top
      topMargin: 20
-//         left: caricon.right
-//         leftMargin: 30
+
     }
 
     MouseArea{
@@ -99,8 +161,7 @@ Image {
     anchors{
      top: parent.top
      topMargin: pages==0 ? 20 : 15
-//         right: caricon.left
-//         rightMargin: 30
+
     }
 
     MouseArea{
@@ -112,29 +173,7 @@ Image {
     }
 }
 
-//    Notification{
-//        id:notification
-//    }
 
-
-Footer{
-    id : footer
-    anchors.horizontalCenter: parent.horizontalCenter
-    anchors.bottom: parent.bottom
-    anchors.bottomMargin: 15
-}
-//    ChartView {
-//       width: 400
-//        height: 300
-//        theme: ChartView.ChartThemeBrownSand
-//        antialiasing: true
-
-//        PieSeries {
-//            id: pieSeries
-//            PieSlice { label: "eaten"; value: 94.9 }
-//            PieSlice { label: "not yet eaten"; value: 5.1 }
-//        }
-//    }
 ParallelAnimation{
 id:cariconn
 NumberAnimation {

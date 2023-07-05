@@ -45,7 +45,7 @@ Item{
     onDoorChanged:  {
         if(door & !frontlight){
            first.start();
-             flag1 = 1;
+            flag1 = 1;
             flag0=0;
             flag2=0;
             flag3 =0;
@@ -747,8 +747,9 @@ Item{
 
 
 
-//  DaignosticBuffer{
-//      id:daignostic
+  DaignosticBuffer{
+      id:daignostic
+      x:150 ;y:20
 
-//  }
+  }
 }

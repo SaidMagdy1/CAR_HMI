@@ -39,7 +39,7 @@ Item {
        }
    }
  Rectangle{
-     id:underChartft
+     id:underChartft    //chart Footer
      anchors.fill: chartCanvas
      gradient: Gradient{
          GradientStop{position: 1 ;color:"blue" }
@@ -55,7 +55,7 @@ Item {
      width: batteryChart.width*5
      height: batteryChart.height
 
-     property int canvasX: 0
+     property int canvasX: 0              //line position
      property int canvasY: batteryChart.lineY
      property int canvasbottom: height
      property color lColor: batteryChart.lineColor
@@ -83,25 +83,25 @@ Item {
 
 
      onPaint: {
-         var ctx=getContext('2d');
+
+         var ctx=getContext("2d");
          ctx.lineWidth=4;
          ctx.strokeStyle=lColor;
-         ctx.beginPath();
-         ctx.moveTo(canvasX,canvasY);
-         canvasX=batteryChart.lineX ;
-         canvasY=batteryChart.lineY ;
-         ctx.lineTo(canvasX,canvasY);
+         ctx.beginPath();               //battery value
 
+         ctx.moveTo(canvasX,canvasY); // move to old point
+         canvasX=batteryChart.lineX ; //update the point
+         canvasY=batteryChart.lineY ;
+         ctx.lineTo(canvasX,canvasY);// connect between them
 
          ctx.stroke();
 
-
-         ctx.beginPath();
+         ctx.beginPath();              // area under battery value
          var gradient = ctx.createLinearGradient(canvasX, canvasY,canvasX,canvasbottom);
          gradient.addColorStop(1,"transparent");
          gradient.addColorStop(0,"#416870");
          ctx.fillStyle = gradient;
-         ctx.fillRect(canvasX, canvasY,1,canvasbottom);
+         ctx.fillRect(canvasX, canvasY,batteryChart.rate/10,canvasbottom);
          ctx.stroke();
 
          //ctx.rect(canvasX, canvasY, 1,canvasY);

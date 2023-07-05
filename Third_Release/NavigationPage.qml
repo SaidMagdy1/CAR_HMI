@@ -60,7 +60,7 @@ Item{
         id: routeQuery
     }
 
-    RouteModel {
+    RouteModel {             //available pathes
         id: routeModel
         plugin: mapboxglPlugin
         query: routeQuery
@@ -113,7 +113,7 @@ Item{
         zoomLevel: zoom
 
 
-        MapItemView {
+        MapItemView {             //connect map with mapitems like path
             model: routeModel
             delegate: MapRoute {
                 route: routeData
@@ -124,8 +124,8 @@ Item{
             }
         }
 
-        MapItemView {
-            model: routeModel.status == RouteModel.Ready ? routeModel.get(0).path : null
+        MapItemView {       // this is only the balls in the middle
+            model: routeModel.status == RouteModel.Ready ? routeModel.get(0).path : null  // when its ready get first path
             delegate: MapQuickItem {
                 anchorPoint.x: pathMarker.width / 2
                 anchorPoint.y: pathMarker.height / 2
@@ -144,7 +144,7 @@ Item{
         }
 
         MapItemView {
-            model: routeQuery.waypoints
+            model: routeQuery.waypoints     //start and end markers
             delegate: MapQuickItem {
                 anchorPoint.x: waypointMarker.width / 1.9    //this is for distance from mouse clicked to the Icon
                 anchorPoint.y: waypointMarker.height / 1.1
